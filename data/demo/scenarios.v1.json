@@ -1,0 +1,82 @@
+{
+  "schema": "knowledge-system.demo-scenarios",
+  "schema_version": 1,
+  "dataset_id": "knowledge-system-v0-synthetic-demo",
+  "dataset_version": "demo-v1",
+  "classification": "SYNTHETIC/DEMO_ONLY",
+  "disclaimer": "SYNTHETIC / DEMO_ONLY：本演示数据并非真实企业制度，不得用于真实业务判断。",
+  "scenarios": [
+    {
+      "scenario_id": "exact-locate",
+      "title": "精确定位演示规则",
+      "category": "exact_locate",
+      "scope": "demo-payments",
+      "steps": [{"action": "query", "query": "定位演示积分复核门槛规则", "top_k": 1}],
+      "observable_boundaries": ["返回可追溯 Evidence 与 Source", "正式名称来自 synthetic corpus"]
+    },
+    {
+      "scenario_id": "browse-scope",
+      "title": "浏览范围内规则集合",
+      "category": "browse",
+      "scope": "demo-payments",
+      "steps": [{"action": "query", "query": "浏览全部演示支付规则"}],
+      "observable_boundaries": ["结果是 scope 内集合", "Browse 不强制 Top-1"]
+    },
+    {
+      "scenario_id": "fuzzy-discover",
+      "title": "自然表达发现正式名称",
+      "category": "fuzzy_discover",
+      "scope": "demo-payments",
+      "steps": [{"action": "query", "query": "晚上金额很大想再找人看一下怎么办"}],
+      "observable_boundaries": ["走 hybrid/semantic retrieval", "正式规则名称只取自 Evidence"]
+    },
+    {
+      "scenario_id": "case-threshold-update",
+      "title": "同一 session 补充阈值事实",
+      "category": "case_threshold_update",
+      "scope": "demo-payments",
+      "steps": [
+        {"action": "query", "query": "演示积分复核门槛规则是否适用于当前情况", "top_k": 1},
+        {"action": "case_start", "description": "当前尚未提供点赞数。"},
+        {"action": "case_update", "description": "现在52个赞"}
+      ],
+      "observable_boundaries": ["UPDATE 只追加 CaseContext", "original query 保留", "比较仅输出 matched/missing/unknown"]
+    },
+    {
+      "scenario_id": "duplicate-compare",
+      "title": "重复比较输入确定性去重",
+      "category": "duplicate",
+      "scope": "demo-payments",
+      "steps": [
+        {"action": "query", "query": "演示积分复核门槛规则是否适用", "top_k": 1},
+        {"action": "case_start", "description": "点赞数是52个"},
+        {"action": "repeat_comparison_input", "count": 2}
+      ],
+      "observable_boundaries": ["重复条件只计一次", "duplicate mapping 可审计", "不输出最终业务决定"]
+    },
+    {
+      "scenario_id": "knowledge-missing",
+      "title": "当前知识库未检索到",
+      "category": "knowledge_missing",
+      "scope": "demo-archive",
+      "steps": [{"action": "query", "query": "寻找火星样本冷冻运输章程"}],
+      "observable_boundaries": ["Evidence 为空", "Not Found 不等于企业不存在"]
+    },
+    {
+      "scenario_id": "source-ambiguity",
+      "title": "来源歧义进入核验模式",
+      "category": "source_ambiguity_verification",
+      "scope": "demo-ambiguous",
+      "steps": [{"action": "query", "query": "演示特殊金额酌情复核说明"}],
+      "observable_boundaries": ["保留原文与歧义片段", "展示 Source 与核验路径", "不猜测确定结论"]
+    },
+    {
+      "scenario_id": "out-of-scope",
+      "title": "明确知识边界",
+      "category": "out_of_scope",
+      "scope": "weather",
+      "steps": [{"action": "query", "query": "明天室外天气如何"}],
+      "observable_boundaries": ["Evidence 为空", "不回退为通用问答", "不声称企业没有规则"]
+    }
+  ]
+}

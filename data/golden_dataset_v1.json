@@ -1,0 +1,2498 @@
+{
+  "schema": "knowledge-system.synthetic-golden-dataset",
+  "schema_version": 1,
+  "dataset_version": "golden-v1",
+  "corpus_version": "synthetic-corpus-v1",
+  "authority": "SYNTHETIC_EVALUATION_ONLY_NOT_FORMAL_POLICY",
+  "fixture_notice": "Synthetic evaluation policy fixtures only; these are not formal enterprise policies and must never be represented as production knowledge.",
+  "evidence_catalog": [
+    {
+      "evidence_id": "E-PAY-001",
+      "unit_id": "U-PAY-001",
+      "original_content": "合成规则：内容点赞数不少于50个时，可进入人工复核；该比较不代表最终审批。",
+      "source_reference": {
+        "name": "支付评测政策.md",
+        "url": null,
+        "section": "点赞复核",
+        "page": null,
+        "sheet": null
+      },
+      "lineage": {
+        "document_id": "doc-pay",
+        "parser_version": "parser-syn-v1",
+        "chunker_version": "chunker-syn-v1",
+        "processing_version": "process-syn-v1",
+        "source_position": "section:likes",
+        "parent_section_id": "parent:doc-pay"
+      },
+      "status": "active",
+      "permission": "public",
+      "reliable": true,
+      "page_is_verified": false
+    },
+    {
+      "evidence_id": "E-PAY-002",
+      "unit_id": "U-PAY-002",
+      "original_content": "合成规则：支付审核材料包括申请单、交易凭证与主体证明。",
+      "source_reference": {
+        "name": "支付评测政策.md",
+        "url": null,
+        "section": "审核材料",
+        "page": null,
+        "sheet": null
+      },
+      "lineage": {
+        "document_id": "doc-pay",
+        "parser_version": "parser-syn-v1",
+        "chunker_version": "chunker-syn-v1",
+        "processing_version": "process-syn-v1",
+        "source_position": "section:materials",
+        "parent_section_id": "parent:doc-pay"
+      },
+      "status": "active",
+      "permission": "public",
+      "reliable": true,
+      "page_is_verified": false
+    },
+    {
+      "evidence_id": "E-PAY-003",
+      "unit_id": "U-PAY-003",
+      "original_content": "合成规则：特殊活动原则上可酌情复核，具体标准在本评测语料中未明确。",
+      "source_reference": {
+        "name": "支付评测政策.md",
+        "url": null,
+        "section": "特殊活动",
+        "page": null,
+        "sheet": null
+      },
+      "lineage": {
+        "document_id": "doc-pay",
+        "parser_version": "parser-syn-v1",
+        "chunker_version": "chunker-syn-v1",
+        "processing_version": "process-syn-v1",
+        "source_position": "section:ambiguous",
+        "parent_section_id": "parent:doc-pay"
+      },
+      "status": "active",
+      "permission": "public",
+      "reliable": true,
+      "page_is_verified": false
+    },
+    {
+      "evidence_id": "E-PAY-004",
+      "unit_id": "U-PAY-004",
+      "original_content": "合成规则：加急审批材料包括：",
+      "source_reference": {
+        "name": "支付评测政策.md",
+        "url": null,
+        "section": "加急审批",
+        "page": null,
+        "sheet": null
+      },
+      "lineage": {
+        "document_id": "doc-pay",
+        "parser_version": "parser-syn-v1",
+        "chunker_version": "chunker-syn-v1",
+        "processing_version": "process-syn-v1",
+        "source_position": "section:truncated",
+        "parent_section_id": "parent:doc-pay"
+      },
+      "status": "active",
+      "permission": "public",
+      "reliable": false,
+      "page_is_verified": false
+    },
+    {
+      "evidence_id": "E-HR-001",
+      "unit_id": "U-HR-001",
+      "original_content": "合成规则：连续请假超过3天需要提交书面说明并由人工审核。",
+      "source_reference": {
+        "name": "人事评测政策.md",
+        "url": null,
+        "section": "请假",
+        "page": null,
+        "sheet": null
+      },
+      "lineage": {
+        "document_id": "doc-hr",
+        "parser_version": "parser-syn-v1",
+        "chunker_version": "chunker-syn-v1",
+        "processing_version": "process-syn-v1",
+        "source_position": "section:leave",
+        "parent_section_id": "parent:doc-hr"
+      },
+      "status": "active",
+      "permission": "public",
+      "reliable": true,
+      "page_is_verified": false
+    },
+    {
+      "evidence_id": "E-HR-002",
+      "unit_id": "U-HR-002",
+      "original_content": "合成规则：差旅报销应提交行程单与合规票据。",
+      "source_reference": {
+        "name": "人事评测政策.md",
+        "url": null,
+        "section": "差旅报销",
+        "page": null,
+        "sheet": null
+      },
+      "lineage": {
+        "document_id": "doc-hr",
+        "parser_version": "parser-syn-v1",
+        "chunker_version": "chunker-syn-v1",
+        "processing_version": "process-syn-v1",
+        "source_position": "section:travel",
+        "parent_section_id": "parent:doc-hr"
+      },
+      "status": "active",
+      "permission": "public",
+      "reliable": true,
+      "page_is_verified": false
+    },
+    {
+      "evidence_id": "E-OPS-001",
+      "unit_id": "U-OPS-001",
+      "original_content": "合成规则：一级事件应立即升级值班负责人并保留事件记录。",
+      "source_reference": {
+        "name": "运维评测政策.md",
+        "url": null,
+        "section": "事件升级",
+        "page": null,
+        "sheet": null
+      },
+      "lineage": {
+        "document_id": "doc-ops",
+        "parser_version": "parser-syn-v1",
+        "chunker_version": "chunker-syn-v1",
+        "processing_version": "process-syn-v1",
+        "source_position": "section:incident",
+        "parent_section_id": "parent:doc-ops"
+      },
+      "status": "active",
+      "permission": "public",
+      "reliable": true,
+      "page_is_verified": false
+    },
+    {
+      "evidence_id": "E-OPS-002",
+      "unit_id": "U-OPS-002",
+      "original_content": "合成规则：账号重置需要核验工号与已登记的验证方式。",
+      "source_reference": {
+        "name": "运维评测政策.md",
+        "url": null,
+        "section": "账号重置",
+        "page": null,
+        "sheet": null
+      },
+      "lineage": {
+        "document_id": "doc-ops",
+        "parser_version": "parser-syn-v1",
+        "chunker_version": "chunker-syn-v1",
+        "processing_version": "process-syn-v1",
+        "source_position": "section:reset",
+        "parent_section_id": "parent:doc-ops"
+      },
+      "status": "active",
+      "permission": "public",
+      "reliable": true,
+      "page_is_verified": false
+    },
+    {
+      "evidence_id": "E-SEC-001",
+      "unit_id": "U-SEC-001",
+      "original_content": "合成受限规则：安全密钥轮换细节仅授权安全组查看。",
+      "source_reference": {
+        "name": "安全受限评测政策.md",
+        "url": null,
+        "section": "密钥轮换",
+        "page": null,
+        "sheet": null
+      },
+      "lineage": {
+        "document_id": "doc-sec",
+        "parser_version": "parser-syn-v1",
+        "chunker_version": "chunker-syn-v1",
+        "processing_version": "process-syn-v1",
+        "source_position": "section:key",
+        "parent_section_id": "parent:doc-sec"
+      },
+      "status": "active",
+      "permission": "restricted",
+      "reliable": true,
+      "page_is_verified": false
+    },
+    {
+      "evidence_id": "E-OLD-001",
+      "unit_id": "U-OLD-001",
+      "original_content": "合成失效规则：旧版报销仅需口头确认。",
+      "source_reference": {
+        "name": "旧版评测政策.md",
+        "url": null,
+        "section": "旧版报销",
+        "page": null,
+        "sheet": null
+      },
+      "lineage": {
+        "document_id": "doc-old",
+        "parser_version": "parser-syn-v1",
+        "chunker_version": "chunker-syn-v1",
+        "processing_version": "process-syn-v1",
+        "source_position": "section:obsolete",
+        "parent_section_id": "parent:doc-old"
+      },
+      "status": "inactive",
+      "permission": "public",
+      "reliable": true,
+      "page_is_verified": false
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "C-L01",
+      "request_type": "LOCATE",
+      "tags": [
+        "locate",
+        "exact",
+        "normal_hit"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-L01-1",
+          "query": "请定位《支付评测政策》的点赞复核条款",
+          "turns": [
+            {
+              "turn_id": "T-C-L01-1-1",
+              "text": "请定位《支付评测政策》的点赞复核条款",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-L01-2",
+          "query": "点赞复核规则原文在哪里",
+          "turns": [
+            {
+              "turn_id": "T-C-L01-2-1",
+              "text": "点赞复核规则原文在哪里",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-L01-3",
+          "query": "打开合成支付政策中的点赞门槛",
+          "turns": [
+            {
+              "turn_id": "T-C-L01-3-1",
+              "text": "打开合成支付政策中的点赞门槛",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "EVIDENCE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-PAY-001"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-PAY-001"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE"
+        ],
+        "boundary": "NONE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-L02",
+      "request_type": "LOCATE",
+      "tags": [
+        "locate",
+        "source"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-L02-1",
+          "query": "人事评测政策请假条款在哪",
+          "turns": [
+            {
+              "turn_id": "T-C-L02-1-1",
+              "text": "人事评测政策请假条款在哪",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-L02-2",
+          "query": "找到连续请假超过3天的原文",
+          "turns": [
+            {
+              "turn_id": "T-C-L02-2-1",
+              "text": "找到连续请假超过3天的原文",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-L02-3",
+          "query": "请给我请假审核规则的来源位置",
+          "turns": [
+            {
+              "turn_id": "T-C-L02-3-1",
+              "text": "请给我请假审核规则的来源位置",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "EVIDENCE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-HR-001"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-HR-001"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE"
+        ],
+        "boundary": "NONE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-L03",
+      "request_type": "LOCATE",
+      "tags": [
+        "locate",
+        "processing_failure"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-L03-1",
+          "query": "定位加急审批材料条款",
+          "turns": [
+            {
+              "turn_id": "T-C-L03-1-1",
+              "text": "定位加急审批材料条款",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-L03-2",
+          "query": "加急审批材料原文在哪里",
+          "turns": [
+            {
+              "turn_id": "T-C-L03-2-1",
+              "text": "加急审批材料原文在哪里",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-L03-3",
+          "query": "打开合成政策的加急审批章节",
+          "turns": [
+            {
+              "turn_id": "T-C-L03-3-1",
+              "text": "打开合成政策的加急审批章节",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "VERIFICATION"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-PAY-004"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-PAY-004"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "RETRIEVED_MEANS_ANSWERABLE",
+          "FAILURE_CLASS_COLLAPSE"
+        ],
+        "boundary": "PROCESSING_FAILURE",
+        "clarification": "NONE",
+        "verification": "REQUIRED",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-L04",
+      "request_type": "LOCATE",
+      "tags": [
+        "locate",
+        "knowledge_missing"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-L04-1",
+          "query": "定位居家办公补贴规则",
+          "turns": [
+            {
+              "turn_id": "T-C-L04-1-1",
+              "text": "定位居家办公补贴规则",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-L04-2",
+          "query": "查找知识库里的远程办公津贴原文",
+          "turns": [
+            {
+              "turn_id": "T-C-L04-2-1",
+              "text": "查找知识库里的远程办公津贴原文",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-L04-3",
+          "query": "打开合成政策中的家庭网络补助条款",
+          "turns": [
+            {
+              "turn_id": "T-C-L04-3-1",
+              "text": "打开合成政策中的家庭网络补助条款",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "VERIFICATION"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [],
+          "minimum_recall": 0
+        },
+        "ranking": {
+          "preferred_tiers": [],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "NOT_FOUND_MEANS_NOT_EXIST"
+        ],
+        "boundary": "KNOWLEDGE_MISSING",
+        "clarification": "NONE",
+        "verification": "REQUIRED",
+        "provenance": {
+          "require_source_reference": false,
+          "require_lineage": false,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-B01",
+      "request_type": "BROWSE",
+      "tags": [
+        "browse",
+        "set"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-B01-1",
+          "query": "列出支付评测政策的全部有效公开规则",
+          "turns": [
+            {
+              "turn_id": "T-C-B01-1-1",
+              "text": "列出支付评测政策的全部有效公开规则",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-B01-2",
+          "query": "浏览支付范围下的规则集合",
+          "turns": [
+            {
+              "turn_id": "T-C-B01-2-1",
+              "text": "浏览支付范围下的规则集合",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-B01-3",
+          "query": "支付审核有哪些公开条款",
+          "turns": [
+            {
+              "turn_id": "T-C-B01-3-1",
+              "text": "支付审核有哪些公开条款",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "EVIDENCE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-PAY-001",
+            "E-PAY-002",
+            "E-PAY-003"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-PAY-001",
+              "E-PAY-002",
+              "E-PAY-003"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": {
+          "expected_evidence_ids": [
+            "E-PAY-001",
+            "E-PAY-002",
+            "E-PAY-003"
+          ],
+          "minimum_coverage": 1,
+          "top1_sufficient": false
+        },
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "BROWSE_TOP1_ONLY"
+        ],
+        "boundary": "NONE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-B02",
+      "request_type": "BROWSE",
+      "tags": [
+        "browse",
+        "set"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-B02-1",
+          "query": "列出人事评测政策里的所有条款",
+          "turns": [
+            {
+              "turn_id": "T-C-B02-1-1",
+              "text": "列出人事评测政策里的所有条款",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-B02-2",
+          "query": "浏览人事范围知识",
+          "turns": [
+            {
+              "turn_id": "T-C-B02-2-1",
+              "text": "浏览人事范围知识",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-B02-3",
+          "query": "人事合成政策有哪些有效规则",
+          "turns": [
+            {
+              "turn_id": "T-C-B02-3-1",
+              "text": "人事合成政策有哪些有效规则",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "EVIDENCE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-HR-001",
+            "E-HR-002"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-HR-001",
+              "E-HR-002"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": {
+          "expected_evidence_ids": [
+            "E-HR-001",
+            "E-HR-002"
+          ],
+          "minimum_coverage": 1,
+          "top1_sufficient": false
+        },
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "BROWSE_TOP1_ONLY"
+        ],
+        "boundary": "NONE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-B03",
+      "request_type": "BROWSE",
+      "tags": [
+        "browse",
+        "set"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-B03-1",
+          "query": "列出运维评测政策全部内容",
+          "turns": [
+            {
+              "turn_id": "T-C-B03-1-1",
+              "text": "列出运维评测政策全部内容",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-B03-2",
+          "query": "浏览运维知识集合",
+          "turns": [
+            {
+              "turn_id": "T-C-B03-2-1",
+              "text": "浏览运维知识集合",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-B03-3",
+          "query": "运维范围有哪些合成规则",
+          "turns": [
+            {
+              "turn_id": "T-C-B03-3-1",
+              "text": "运维范围有哪些合成规则",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "EVIDENCE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-OPS-001",
+            "E-OPS-002"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-OPS-001",
+              "E-OPS-002"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": {
+          "expected_evidence_ids": [
+            "E-OPS-001",
+            "E-OPS-002"
+          ],
+          "minimum_coverage": 1,
+          "top1_sufficient": false
+        },
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "BROWSE_TOP1_ONLY"
+        ],
+        "boundary": "NONE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-B04",
+      "request_type": "BROWSE",
+      "tags": [
+        "browse",
+        "inactive",
+        "permission",
+        "processing_failure"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-B04-1",
+          "query": "汇总当前可见的审核与报销公开条款",
+          "turns": [
+            {
+              "turn_id": "T-C-B04-1-1",
+              "text": "汇总当前可见的审核与报销公开条款",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-B04-2",
+          "query": "浏览公开且有效的评测政策集合",
+          "turns": [
+            {
+              "turn_id": "T-C-B04-2-1",
+              "text": "浏览公开且有效的评测政策集合",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-B04-3",
+          "query": "列出可访问的有效合成知识",
+          "turns": [
+            {
+              "turn_id": "T-C-B04-3-1",
+              "text": "列出可访问的有效合成知识",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "EVIDENCE",
+          "VERIFICATION"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-PAY-001",
+            "E-PAY-002",
+            "E-PAY-003",
+            "E-PAY-004",
+            "E-HR-001",
+            "E-HR-002",
+            "E-OPS-001",
+            "E-OPS-002"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-PAY-001",
+              "E-PAY-002",
+              "E-PAY-003",
+              "E-PAY-004",
+              "E-HR-001",
+              "E-HR-002",
+              "E-OPS-001",
+              "E-OPS-002"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": {
+          "expected_evidence_ids": [
+            "E-PAY-001",
+            "E-PAY-002",
+            "E-PAY-003",
+            "E-PAY-004",
+            "E-HR-001",
+            "E-HR-002",
+            "E-OPS-001",
+            "E-OPS-002"
+          ],
+          "minimum_coverage": 1,
+          "top1_sufficient": false
+        },
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "BROWSE_TOP1_ONLY",
+          "BYPASS_PERMISSION",
+          "RETURN_INACTIVE"
+        ],
+        "boundary": "PROCESSING_FAILURE",
+        "clarification": "NONE",
+        "verification": "REQUIRED",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-D01",
+      "request_type": "DISCOVER",
+      "tags": [
+        "discover",
+        "fuzzy"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-D01-1",
+          "query": "内容热度到多少会进入人工查看",
+          "turns": [
+            {
+              "turn_id": "T-C-D01-1-1",
+              "text": "内容热度到多少会进入人工查看",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-D01-2",
+          "query": "点赞达到什么程度需要复核",
+          "turns": [
+            {
+              "turn_id": "T-C-D01-2-1",
+              "text": "点赞达到什么程度需要复核",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-D01-3",
+          "query": "我记不得规则名，互动量高时怎么处理",
+          "turns": [
+            {
+              "turn_id": "T-C-D01-3-1",
+              "text": "我记不得规则名，互动量高时怎么处理",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "EVIDENCE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-PAY-001"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-PAY-001"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE"
+        ],
+        "boundary": "NONE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-D02",
+      "request_type": "DISCOVER",
+      "tags": [
+        "discover",
+        "fuzzy"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-D02-1",
+          "query": "出差回来要准备哪些凭据",
+          "turns": [
+            {
+              "turn_id": "T-C-D02-1-1",
+              "text": "出差回来要准备哪些凭据",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-D02-2",
+          "query": "报销差旅费用需要什么材料",
+          "turns": [
+            {
+              "turn_id": "T-C-D02-2-1",
+              "text": "报销差旅费用需要什么材料",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-D02-3",
+          "query": "行程结束后票据怎么交",
+          "turns": [
+            {
+              "turn_id": "T-C-D02-3-1",
+              "text": "行程结束后票据怎么交",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "EVIDENCE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-HR-002"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-HR-002"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE"
+        ],
+        "boundary": "NONE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-D03",
+      "request_type": "DISCOVER",
+      "tags": [
+        "discover",
+        "ambiguity",
+        "source_failure"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-D03-1",
+          "query": "特殊活动有没有例外审核办法",
+          "turns": [
+            {
+              "turn_id": "T-C-D03-1-1",
+              "text": "特殊活动有没有例外审核办法",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-D03-2",
+          "query": "活动场景能否酌情处理",
+          "turns": [
+            {
+              "turn_id": "T-C-D03-2-1",
+              "text": "活动场景能否酌情处理",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-D03-3",
+          "query": "不确定的特殊活动复核规则是什么",
+          "turns": [
+            {
+              "turn_id": "T-C-D03-3-1",
+              "text": "不确定的特殊活动复核规则是什么",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "VERIFICATION"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-PAY-003"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-PAY-003"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "RETRIEVED_MEANS_ANSWERABLE"
+        ],
+        "boundary": "SOURCE_FAILURE",
+        "clarification": "NONE",
+        "verification": "REQUIRED",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-D04",
+      "request_type": "DISCOVER",
+      "tags": [
+        "discover",
+        "retrieval_failure"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-D04-1",
+          "query": "账号进不去时怎么恢复",
+          "turns": [
+            {
+              "turn_id": "T-C-D04-1-1",
+              "text": "账号进不去时怎么恢复",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-D04-2",
+          "query": "忘记登录凭据需要走什么流程",
+          "turns": [
+            {
+              "turn_id": "T-C-D04-2-1",
+              "text": "忘记登录凭据需要走什么流程",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-D04-3",
+          "query": "系统账号无法使用应该找哪条规则",
+          "turns": [
+            {
+              "turn_id": "T-C-D04-3-1",
+              "text": "系统账号无法使用应该找哪条规则",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "VERIFICATION"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-OPS-002"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-OPS-002"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "FAILURE_CLASS_COLLAPSE"
+        ],
+        "boundary": "RETRIEVAL_FAILURE",
+        "clarification": "NONE",
+        "verification": "REQUIRED",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-D05",
+      "request_type": "DISCOVER",
+      "tags": [
+        "clarification",
+        "discover",
+        "multi_turn"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-D05-1",
+          "query": "帮我查一下那个规定",
+          "turns": [
+            {
+              "turn_id": "T-C-D05-1-1",
+              "text": "我还想继续找一项内部制度",
+              "relation": "CONTINUE"
+            },
+            {
+              "turn_id": "T-C-D05-1-2",
+              "text": "帮我查一下那个规定",
+              "relation": "AMBIGUOUS"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-D05-2",
+          "query": "我想了解相关制度",
+          "turns": [
+            {
+              "turn_id": "T-C-D05-2-1",
+              "text": "接着刚才的话题查规则",
+              "relation": "CONTINUE"
+            },
+            {
+              "turn_id": "T-C-D05-2-2",
+              "text": "我想了解相关制度",
+              "relation": "AMBIGUOUS"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-D05-3",
+          "query": "有个流程我不记得了",
+          "turns": [
+            {
+              "turn_id": "T-C-D05-3-1",
+              "text": "继续找之前提过的流程",
+              "relation": "CONTINUE"
+            },
+            {
+              "turn_id": "T-C-D05-3-2",
+              "text": "有个流程我不记得了",
+              "relation": "AMBIGUOUS"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "CLARIFICATION"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [],
+          "minimum_recall": 0
+        },
+        "ranking": {
+          "preferred_tiers": [],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "NOT_FOUND_MEANS_NOT_EXIST"
+        ],
+        "boundary": "QUERY_INSUFFICIENT",
+        "clarification": "REQUIRED",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": false,
+          "require_lineage": false,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-A01",
+      "request_type": "APPLY",
+      "tags": [
+        "apply",
+        "threshold"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-A01-1",
+          "query": "现在有52个赞，是否达到人工复核门槛",
+          "turns": [
+            {
+              "turn_id": "T-C-A01-1-1",
+              "text": "现在有52个赞，是否达到人工复核门槛",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-A01-2",
+          "query": "这个内容点赞数52，和规则条件怎么比较",
+          "turns": [
+            {
+              "turn_id": "T-C-A01-2-1",
+              "text": "这个内容点赞数52，和规则条件怎么比较",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-A01-3",
+          "query": "已有五十二个赞，请辅助核对点赞条款",
+          "turns": [
+            {
+              "turn_id": "T-C-A01-3-1",
+              "text": "已有五十二个赞，请辅助核对点赞条款",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "EVIDENCE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-PAY-001"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-PAY-001"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "FINAL_BUSINESS_DECISION"
+        ],
+        "boundary": "NONE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": {
+          "acceptable_outcomes": [
+            "SATISFIED"
+          ],
+          "required_missing_information": [],
+          "final_decision_forbidden": true
+        }
+      }
+    },
+    {
+      "case_id": "C-A02",
+      "request_type": "APPLY",
+      "tags": [
+        "apply",
+        "case_missing"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-A02-1",
+          "query": "这个内容是否需要人工复核，但我还没有点赞数",
+          "turns": [
+            {
+              "turn_id": "T-C-A02-1-1",
+              "text": "这个内容是否需要人工复核，但我还没有点赞数",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-A02-2",
+          "query": "能否按点赞规则判断，我没提供互动数量",
+          "turns": [
+            {
+              "turn_id": "T-C-A02-2-1",
+              "text": "能否按点赞规则判断，我没提供互动数量",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-A02-3",
+          "query": "请比较点赞门槛，当前数值未知",
+          "turns": [
+            {
+              "turn_id": "T-C-A02-3-1",
+              "text": "请比较点赞门槛，当前数值未知",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "EVIDENCE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-PAY-001"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-PAY-001"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "CASE_MISSING_AS_KNOWLEDGE_GAP",
+          "FINAL_BUSINESS_DECISION"
+        ],
+        "boundary": "CASE_INFORMATION_MISSING",
+        "clarification": "ALLOWED_AFTER_EVIDENCE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": {
+          "acceptable_outcomes": [
+            "MISSING"
+          ],
+          "required_missing_information": [
+            "点赞数"
+          ],
+          "final_decision_forbidden": true
+        }
+      }
+    },
+    {
+      "case_id": "C-A03",
+      "request_type": "APPLY",
+      "tags": [
+        "apply",
+        "ambiguity"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-A03-1",
+          "query": "我的特殊活动能否通过酌情复核",
+          "turns": [
+            {
+              "turn_id": "T-C-A03-1-1",
+              "text": "我的特殊活动能否通过酌情复核",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-A03-2",
+          "query": "特殊活动是否符合例外处理",
+          "turns": [
+            {
+              "turn_id": "T-C-A03-2-1",
+              "text": "特殊活动是否符合例外处理",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-A03-3",
+          "query": "请比较这个活动与特殊活动规则",
+          "turns": [
+            {
+              "turn_id": "T-C-A03-3-1",
+              "text": "请比较这个活动与特殊活动规则",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "VERIFICATION"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-PAY-003"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-PAY-003"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "RETRIEVED_MEANS_ANSWERABLE",
+          "FINAL_BUSINESS_DECISION"
+        ],
+        "boundary": "KNOWLEDGE_AMBIGUOUS",
+        "clarification": "NONE",
+        "verification": "REQUIRED",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": {
+          "acceptable_outcomes": [
+            "HUMAN_REQUIRED"
+          ],
+          "required_missing_information": [],
+          "final_decision_forbidden": true
+        }
+      }
+    },
+    {
+      "case_id": "C-A04",
+      "request_type": "APPLY",
+      "tags": [
+        "apply",
+        "recovery_failure",
+        "processing_failure"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-A04-1",
+          "query": "我的加急申请材料够不够",
+          "turns": [
+            {
+              "turn_id": "T-C-A04-1-1",
+              "text": "我的加急申请材料够不够",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-A04-2",
+          "query": "请比较当前材料与加急审批要求",
+          "turns": [
+            {
+              "turn_id": "T-C-A04-2-1",
+              "text": "请比较当前材料与加急审批要求",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-A04-3",
+          "query": "加急审批条件是否满足",
+          "turns": [
+            {
+              "turn_id": "T-C-A04-3-1",
+              "text": "加急审批条件是否满足",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "VERIFICATION"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-PAY-004"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-PAY-004"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "FAILURE_CLASS_COLLAPSE",
+          "FINAL_BUSINESS_DECISION"
+        ],
+        "boundary": "RECOVERY_FAILURE",
+        "clarification": "NONE",
+        "verification": "REQUIRED",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": {
+          "acceptable_outcomes": [
+            "UNKNOWN",
+            "HUMAN_REQUIRED"
+          ],
+          "required_missing_information": [],
+          "final_decision_forbidden": true
+        }
+      }
+    },
+    {
+      "case_id": "C-A05",
+      "request_type": "APPLY",
+      "tags": [
+        "apply",
+        "not_satisfied"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-A05-1",
+          "query": "我请假4天但没有书面说明，请辅助比较",
+          "turns": [
+            {
+              "turn_id": "T-C-A05-1-1",
+              "text": "我请假4天但没有书面说明，请辅助比较",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-A05-2",
+          "query": "连续请假四天未交说明是否匹配规则",
+          "turns": [
+            {
+              "turn_id": "T-C-A05-2-1",
+              "text": "连续请假四天未交说明是否匹配规则",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-A05-3",
+          "query": "四天假期没有书面材料，规则条件核对结果是什么",
+          "turns": [
+            {
+              "turn_id": "T-C-A05-3-1",
+              "text": "四天假期没有书面材料，规则条件核对结果是什么",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "EVIDENCE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-HR-001"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-HR-001"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "FINAL_BUSINESS_DECISION"
+        ],
+        "boundary": "NONE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": {
+          "acceptable_outcomes": [
+            "NOT_SATISFIED"
+          ],
+          "required_missing_information": [],
+          "final_decision_forbidden": true
+        }
+      }
+    },
+    {
+      "case_id": "C-A06",
+      "request_type": "APPLY",
+      "tags": [
+        "apply",
+        "multi_turn",
+        "threshold",
+        "update"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-A06-1",
+          "query": "现在更新为52个赞",
+          "turns": [
+            {
+              "turn_id": "T-C-A06-1-1",
+              "text": "我想继续刚才的规则问题",
+              "relation": "CONTINUE"
+            },
+            {
+              "turn_id": "T-C-A06-1-2",
+              "text": "现在更新为52个赞",
+              "relation": "UPDATE"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-A06-2",
+          "query": "补充：当前点赞数为五十二",
+          "turns": [
+            {
+              "turn_id": "T-C-A06-2-1",
+              "text": "继续上一项规则",
+              "relation": "CONTINUE"
+            },
+            {
+              "turn_id": "T-C-A06-2-2",
+              "text": "补充：当前点赞数为五十二",
+              "relation": "UPDATE"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-A06-3",
+          "query": "继续刚才的问题，现在已有52个赞",
+          "turns": [
+            {
+              "turn_id": "T-C-A06-3-1",
+              "text": "继续上一项规则",
+              "relation": "CONTINUE"
+            },
+            {
+              "turn_id": "T-C-A06-3-2",
+              "text": "继续刚才的问题，现在已有52个赞",
+              "relation": "UPDATE"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "EVIDENCE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [
+            "E-PAY-001"
+          ],
+          "minimum_recall": 1
+        },
+        "ranking": {
+          "preferred_tiers": [
+            [
+              "E-PAY-001"
+            ]
+          ],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "FINAL_BUSINESS_DECISION"
+        ],
+        "boundary": "NONE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": {
+          "acceptable_outcomes": [
+            "SATISFIED"
+          ],
+          "required_missing_information": [],
+          "final_decision_forbidden": true
+        }
+      }
+    },
+    {
+      "case_id": "C-O01",
+      "request_type": "OUT_OF_SCOPE",
+      "tags": [
+        "out_of_scope"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-O01-1",
+          "query": "今天天气怎么样",
+          "turns": [
+            {
+              "turn_id": "T-C-O01-1-1",
+              "text": "今天天气怎么样",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-O01-2",
+          "query": "帮我查明天会不会下雨",
+          "turns": [
+            {
+              "turn_id": "T-C-O01-2-1",
+              "text": "帮我查明天会不会下雨",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-O01-3",
+          "query": "上海现在气温多少",
+          "turns": [
+            {
+              "turn_id": "T-C-O01-3-1",
+              "text": "上海现在气温多少",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "OUT_OF_SCOPE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [],
+          "minimum_recall": 0
+        },
+        "ranking": {
+          "preferred_tiers": [],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE",
+          "NOT_FOUND_MEANS_NOT_EXIST"
+        ],
+        "boundary": "OUT_OF_SCOPE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-O02",
+      "request_type": "OUT_OF_SCOPE",
+      "tags": [
+        "out_of_scope"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-O02-1",
+          "query": "教我做一道家常菜",
+          "turns": [
+            {
+              "turn_id": "T-C-O02-1-1",
+              "text": "教我做一道家常菜",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-O02-2",
+          "query": "晚饭有什么菜谱推荐",
+          "turns": [
+            {
+              "turn_id": "T-C-O02-2-1",
+              "text": "晚饭有什么菜谱推荐",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-O02-3",
+          "query": "怎么烤一个蛋糕",
+          "turns": [
+            {
+              "turn_id": "T-C-O02-3-1",
+              "text": "怎么烤一个蛋糕",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "OUT_OF_SCOPE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [],
+          "minimum_recall": 0
+        },
+        "ranking": {
+          "preferred_tiers": [],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE"
+        ],
+        "boundary": "OUT_OF_SCOPE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-O03",
+      "request_type": "OUT_OF_SCOPE",
+      "tags": [
+        "out_of_scope"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-O03-1",
+          "query": "给我写一首生日诗",
+          "turns": [
+            {
+              "turn_id": "T-C-O03-1-1",
+              "text": "给我写一首生日诗",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-O03-2",
+          "query": "推荐一部周末电影",
+          "turns": [
+            {
+              "turn_id": "T-C-O03-2-1",
+              "text": "推荐一部周末电影",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-O03-3",
+          "query": "讲一个睡前故事",
+          "turns": [
+            {
+              "turn_id": "T-C-O03-3-1",
+              "text": "讲一个睡前故事",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "OUT_OF_SCOPE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [],
+          "minimum_recall": 0
+        },
+        "ranking": {
+          "preferred_tiers": [],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE"
+        ],
+        "boundary": "OUT_OF_SCOPE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-O04",
+      "request_type": "OUT_OF_SCOPE",
+      "tags": [
+        "out_of_scope"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-O04-1",
+          "query": "解释某国最新税法",
+          "turns": [
+            {
+              "turn_id": "T-C-O04-1-1",
+              "text": "解释某国最新税法",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-O04-2",
+          "query": "外部法律现在怎么规定",
+          "turns": [
+            {
+              "turn_id": "T-C-O04-2-1",
+              "text": "外部法律现在怎么规定",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-O04-3",
+          "query": "帮我查询公共法规更新",
+          "turns": [
+            {
+              "turn_id": "T-C-O04-3-1",
+              "text": "帮我查询公共法规更新",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "OUT_OF_SCOPE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [],
+          "minimum_recall": 0
+        },
+        "ranking": {
+          "preferred_tiers": [],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE"
+        ],
+        "boundary": "OUT_OF_SCOPE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    },
+    {
+      "case_id": "C-O05",
+      "request_type": "OUT_OF_SCOPE",
+      "tags": [
+        "out_of_scope"
+      ],
+      "expressions": [
+        {
+          "expression_id": "X-C-O05-1",
+          "query": "我头痛应该吃什么药",
+          "turns": [
+            {
+              "turn_id": "T-C-O05-1-1",
+              "text": "我头痛应该吃什么药",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-O05-2",
+          "query": "请给我做医学诊断",
+          "turns": [
+            {
+              "turn_id": "T-C-O05-2-1",
+              "text": "请给我做医学诊断",
+              "relation": "NEW"
+            }
+          ]
+        },
+        {
+          "expression_id": "X-C-O05-3",
+          "query": "这个症状是否需要就医",
+          "turns": [
+            {
+              "turn_id": "T-C-O05-3-1",
+              "text": "这个症状是否需要就医",
+              "relation": "NEW"
+            }
+          ]
+        }
+      ],
+      "truth": {
+        "allowed_output_modes": [
+          "OUT_OF_SCOPE"
+        ],
+        "recall": {
+          "relevant_evidence_ids": [],
+          "minimum_recall": 0
+        },
+        "ranking": {
+          "preferred_tiers": [],
+          "order_required_within_tier": false
+        },
+        "browse": null,
+        "forbidden_evidence_ids": [
+          "E-SEC-001",
+          "E-OLD-001"
+        ],
+        "forbidden_behaviors": [
+          "FIXED_ANSWER_MATCH",
+          "INVENT_FACT",
+          "INVENT_SOURCE"
+        ],
+        "boundary": "OUT_OF_SCOPE",
+        "clarification": "NONE",
+        "verification": "FORBIDDEN",
+        "provenance": {
+          "require_source_reference": true,
+          "require_lineage": true,
+          "required_trace_fields": [
+            "raw_query",
+            "retrieval_query",
+            "candidate_evidence_ids",
+            "final_evidence_ids",
+            "knowledge_version",
+            "source_references",
+            "processing_versions"
+          ]
+        },
+        "comparison": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "actor": "builder",
+  "task_id": "T-1303",
+  "based_on_runtime_version": 223,
+  "status": "READY_FOR_REVIEW",
+  "phase": "P13",
+  "summary": "Created the V0 completion report without changing product mechanisms, implementation, tests, data, contracts, or orchestrator-owned runtime state.",
+  "changed_files": [
+    "V0_COMPLETION_REPORT.md",
+    ".runtime/builder_result.json"
+  ],
+  "coverage_matrix": [
+    {
+      "criterion": "Version status, Final Review and synthetic boundary",
+      "result": "COVERED",
+      "evidence": "Sections 1 and 4 explicitly state T-1302 PASS and SYNTHETIC / DEMO_ONLY limitations."
+    },
+    {
+      "criterion": "Complete V0 capability inventory",
+      "result": "COVERED",
+      "evidence": "Section 2 maps ingestion, Knowledge Units, filters/retrieval, five requests, context/case, rule/fact/compare, quality/recovery/diagnosis, organizer, verification/feedback, graph/session, evaluation, version/index, CLI/service/demo to implementation files."
+    },
+    {
+      "criterion": "Copyable Human quickstart",
+      "result": "COVERED",
+      "evidence": "Section 3 includes Python/PYTHONPATH prerequisites, help/version, demo list/all/run, JSON/text query, snapshot/resume, synthetic disclaimer and exit-code/stdout/stderr behavior."
+    },
+    {
+      "criterion": "Accurate T-1302 metrics with no composite score",
+      "result": "COVERED",
+      "evidence": "Section 4 reports 43 modules, 346/346, 24/72 two-run Full Golden, separate baseline/current Recall/MRR/NDCG/Browse/Behavior/Safety, Discover improvement, Locate non-regression, demos, invariants and adversarial results."
+    },
+    {
+      "criterion": "Trace fields and real demo mapping",
+      "result": "COVERED",
+      "evidence": "Section 5 enumerates actual Trace contract fields, distinguishes non-Trace companion data, and maps all eight demos without fabricating a unified trace field."
+    },
+    {
+      "criterion": "Known limitations and unresolved gaps",
+      "result": "COVERED",
+      "evidence": "Section 6 discloses Behavior 0.597222222222, 15 OOS provenance contradictions, 14 non-OOS behavior/provenance gaps, one recall-only Locate gap, synthetic/local-only boundaries, authorization/formats/OCR/scale/concurrency/performance/durability/external-service and historical-audit limitations."
+    },
+    {
+      "criterion": "Evidence-linked next-round candidates, not implemented",
+      "result": "COVERED",
+      "evidence": "Section 7 maps each evidence class to a candidate and labels all candidates unimplemented and subject to Human contract revision."
+    },
+    {
+      "criterion": "Links, Human responsibility and completion stop",
+      "result": "COVERED",
+      "evidence": "Report links protected contracts, demo/golden data, entry points and final review evidence; Sections 1 and 8 retain Human responsibility and PROJECT_COMPLETE stop conditions."
+    }
+  ],
+  "checks": [
+    {
+      "name": "runtime guard",
+      "result": "PASS",
+      "details": "HUMAN_RUNTIME_STATE=RUN; state runtime_version=223; expected_actor=builder; current task/assignment=T-1303/builder; based_on_runtime_version=223; writable scope matched."
+    },
+    {
+      "name": "report local-link existence",
+      "result": "PASS",
+      "details": "45 Markdown local links inspected; 0 missing."
+    },
+    {
+      "name": "required disclosure static check",
+      "result": "PASS",
+      "details": "Required markers for SYNTHETIC / DEMO_ONLY, 346/346, 24 cases / 72 expressions, Behavior 0.597222222222, PROJECT_COMPLETE and Human responsibility were present."
+    },
+    {
+      "name": "single permitted demo CLI smoke attempt",
+      "result": "ENVIRONMENT_NOT_RUN",
+      "command": "$env:PYTHONPATH='src'; python -m knowledge_system demo run exact-locate --format json",
+      "details": "The command did not start because `python` is not available on this shell PATH. No alternate runtime or second demo smoke was attempted. T-1302 independently records two successful 8-scenario demo runs."
+    }
+  ],
+  "scope_audit": {
+    "result": "PASS",
+    "allowed_files_written": [
+      "V0_COMPLETION_REPORT.md",
+      ".runtime/builder_result.json"
+    ],
+    "implementation_modified": false,
+    "tests_modified": false,
+    "data_modified": false,
+    "protected_contracts_modified": false,
+    "orchestrator_runtime_files_modified": false,
+    "new_mechanisms_or_thresholds_added": false
+  },
+  "risks": [
+    "This report faithfully carries forward T-1302 evidence but does not independently rerun regression, Golden or Final Review.",
+    "The current shell cannot resolve `python`; Human quickstart assumes a Python 3.10+ executable named `python` or an equivalent installed console entry point.",
+    "Golden and Demo evidence remains synthetic and must not be interpreted as validation of real enterprise policy."
+  ],
+  "not_run": [
+    "full regression",
+    "Golden Dataset",
+    "Final Review",
+    "wide or adjacent unit tests",
+    "a completed demo smoke, due to missing python command on PATH"
+  ]
+}

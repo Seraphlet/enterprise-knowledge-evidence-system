@@ -1,0 +1,62 @@
+[
+  {
+    "unit_id": "demo-rule-like-threshold",
+    "original_content": "演示积分复核门槛规则\n条件：点赞数不少于50个\n结果：进入人工复核。",
+    "semantic_content": "演示支付互动热度、点赞、人气达到门槛后由人工再次查看的规则。",
+    "metadata": {
+      "scope": "demo-payments",
+      "status": "active",
+      "required_permissions": [],
+      "classification": "SYNTHETIC/DEMO_ONLY",
+      "aliases": [
+        "定位演示积分复核门槛规则",
+        "演示积分复核门槛规则是否适用于当前情况",
+        "演示积分复核门槛规则是否适用"
+      ]
+    },
+    "source_reference": {"name": "SYNTHETIC-DEMO-支付规则手册.md", "url": "https://example.invalid/demo/payment-rules", "section": "演示积分复核门槛规则", "page": null, "sheet": null},
+    "lineage": {"document_id": "synthetic-demo-payment-v1", "parser_version": "demo-parser-v1", "chunker_version": "demo-structure-v1", "processing_version": "demo-v1", "source_position": "section:like-threshold", "parent_section_id": "demo-payment-rules"},
+    "parse_status": "SUCCESS",
+    "rule_structure": null
+  },
+  {
+    "unit_id": "demo-rule-night-review",
+    "original_content": "演示夜间大额复核规则\n条件：金额超过1000元\n结果：进入人工复核。",
+    "semantic_content": "晚上、深夜进行金额很大的支付时，需要再找一位人员查看和复核。",
+    "metadata": {"scope": "demo-payments", "status": "active", "required_permissions": [], "classification": "SYNTHETIC/DEMO_ONLY"},
+    "source_reference": {"name": "SYNTHETIC-DEMO-支付规则手册.md", "url": "https://example.invalid/demo/payment-rules", "section": "演示夜间大额复核规则", "page": null, "sheet": null},
+    "lineage": {"document_id": "synthetic-demo-payment-v1", "parser_version": "demo-parser-v1", "chunker_version": "demo-structure-v1", "processing_version": "demo-v1", "source_position": "section:night-review", "parent_section_id": "demo-payment-rules"},
+    "parse_status": "SUCCESS",
+    "rule_structure": null
+  },
+  {
+    "unit_id": "demo-rule-receipt",
+    "original_content": "演示凭证留存规则\n条件：金额不少于100元\n结果：留存演示凭证。",
+    "semantic_content": "演示支付凭证、记录和材料的留存说明。",
+    "metadata": {"scope": "demo-payments", "status": "active", "required_permissions": [], "classification": "SYNTHETIC/DEMO_ONLY"},
+    "source_reference": {"name": "SYNTHETIC-DEMO-支付规则手册.md", "url": "https://example.invalid/demo/payment-rules", "section": "演示凭证留存规则", "page": null, "sheet": null},
+    "lineage": {"document_id": "synthetic-demo-payment-v1", "parser_version": "demo-parser-v1", "chunker_version": "demo-structure-v1", "processing_version": "demo-v1", "source_position": "section:receipt", "parent_section_id": "demo-payment-rules"},
+    "parse_status": "SUCCESS",
+    "rule_structure": null
+  },
+  {
+    "unit_id": "demo-rule-ambiguous",
+    "original_content": "演示特殊金额酌情复核说明\n条件：特殊金额必要时复核\n歧义：必要时的触发条件未明确。",
+    "semantic_content": "演示特殊金额酌情复核说明；原始资料对必要时的触发条件写得不明确。",
+    "metadata": {"scope": "demo-ambiguous", "status": "active", "required_permissions": [], "classification": "SYNTHETIC/DEMO_ONLY"},
+    "source_reference": {"name": "SYNTHETIC-DEMO-支付规则手册.md", "url": "https://example.invalid/demo/payment-rules", "section": "演示特殊金额酌情复核说明", "page": null, "sheet": null},
+    "lineage": {"document_id": "synthetic-demo-payment-v1", "parser_version": "demo-parser-v1", "chunker_version": "demo-structure-v1", "processing_version": "demo-v1", "source_position": "section:ambiguous", "parent_section_id": "demo-payment-rules"},
+    "parse_status": "SUCCESS",
+    "rule_structure": {"ambiguity": [{"text": "必要时", "start": 20, "end": 23}]}
+  },
+  {
+    "unit_id": "demo-archive-restricted-marker",
+    "original_content": "演示归档范围占位资料（无访问权限时不得作为 Evidence 返回）。",
+    "semantic_content": "仅用于演示已知 scope 中没有可访问检索结果的权限边界。",
+    "metadata": {"scope": "demo-archive", "status": "active", "required_permissions": ["demo-archive-private"], "classification": "SYNTHETIC/DEMO_ONLY"},
+    "source_reference": {"name": "SYNTHETIC-DEMO-受限归档.md", "url": "https://example.invalid/demo/restricted", "section": "权限边界占位", "page": null, "sheet": null},
+    "lineage": {"document_id": "synthetic-demo-restricted-v1", "parser_version": "demo-parser-v1", "chunker_version": "demo-structure-v1", "processing_version": "demo-v1", "source_position": "section:restricted", "parent_section_id": "demo-restricted"},
+    "parse_status": "SUCCESS",
+    "rule_structure": null
+  }
+]

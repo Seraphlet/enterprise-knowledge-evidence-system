@@ -1,19 +1,18 @@
 {
-  "task_id": "P14-GATE",
+  "task_id": "V01-GATE-R1",
   "assigned_to": "reviewer",
-  "based_on_runtime_version": 234,
-  "status": "PASS",
-  "phase": "P14",
-  "objective": "在 T-1400 至 T-1403 逻辑合并完成后，首次执行限定的 HTML/Markdown/CSV 聚焦与批量导入集成验证，建立或拒绝 Phase 14 verified checkpoint。",
+  "based_on_runtime_version": 251,
+  "status": "COMPLETE",
+  "phase": "V0.1",
+  "objective": "独立复验 V01-T3-FIX1 并完成 V0.1 最终 Gate：重新运行完整回归与真实语料关键闭环，确认 mixed-quality recovery 不再泄漏不可靠 Evidence。",
   "acceptance_criteria": [
-    "独立审计 T-1400 至 T-1403 diff、actor/version/writable scope 与冻结契约边界，确认只支持 HTML/Markdown/CSV",
-    "只运行 Phase 14 新增测试：tests/test_ingestion_router.py、tests/test_markdown_ingestion.py、tests/test_csv_ingestion.py、tests/test_batch_ingestion.py",
-    "运行必要的既有 HTML 影响回归：tests/test_html_ingestion.py 和 tests/test_knowledge_units.py；不得扩展为全项目测试",
-    "可对本阶段 changed source 做 compile/import 检查；不得运行 Golden Dataset、Final Review、全部 tests 或与 ingestion/query 最小链路无关的模块",
-    "验证混合目录 HTML/Markdown/CSV 到 canonical corpus，再由 load_knowledge_units/KnowledgeService query 读取的最小链路",
-    "验证确定性重跑、稳定 ID、SourceReference、lineage、CSV header-row/物理行、Markdown 层级与结构、重复去重/冲突、PARTIAL/FAILED、安全输入错误及原子输出保护",
-    "若发现失败，输出精确失败测试、预期/实际、根因分类建议与最小修复范围；不得修改业务实现或测试来使其通过",
-    "review_result.json 必须记录实际命令、执行数量、PASS/FAIL、未覆盖范围、是否允许新 checkpoint，以及 full regression 明确未运行"
+    "只读检查 V01-T3-FIX1 diff 与 builder_result，确认修复只逐条过滤 recovered Evidence 且未改 frozen contract/T1/T2/T4/恢复边界",
+    "独立重跑 mixed PARTIAL+SUCCESS 对抗用例：最终不得包含 PARTIAL Evidence；记录 evidence ids、parse statuses、boundary、verification 与 trace",
+    "验证无可靠恢复邻居时仍为 EVIDENCE_INSUFFICIENT/Verification REQUIRED，permission/status/scope/document/section/parent 隔离仍成立",
+    "由于共享 service 已修改，重新运行项目完整兼容回归并记录总数、失败、错误、耗时",
+    "重新执行真实 3 文件/2,325-unit ingest 确定性与 T1-T4 关键 E2E，确认此前 PASS 证据未回归",
+    "核对 Source/Lineage/original/scope、Out-of-Scope、精确 Locate、Apply comparison/Verification 不变量",
+    "输出最终 PASS/FAIL/BLOCKED 到 .runtime/review_result.json；包含四项 before/after、真实 E2E、全回归、文件清单、遗留/非目标与 PowerShell 命令；不得修改实现或测试"
   ],
   "writable_scope": [
     ".runtime/review_result.json"
@@ -24,19 +23,20 @@
     "DECISIONS.md",
     "BUILD.md",
     "TASKS.md",
+    "V0_COMPLETION_REPORT.md",
+    "src/**",
+    "tests/**",
     ".runtime/HUMAN_RUNTIME_STATE",
     ".runtime/state.json",
     ".runtime/current_task.json",
     ".runtime/events.jsonl",
-    ".runtime/builder_result.json",
-    "src/**",
-    "tests/**"
+    ".runtime/builder_result.json"
   ],
   "testing_policy": {
-    "phase14_targeted_gate": true,
-    "full_regression": false,
-    "golden_dataset": false,
-    "final_review": false,
-    "retry_on_failure": "exact failed tests and necessary adjacent cases only after scoped Builder fix"
+    "review_only": true,
+    "tests": true,
+    "focused_only": false,
+    "full_regression": true,
+    "real_corpus_e2e": true
   }
 }

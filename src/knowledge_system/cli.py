@@ -66,6 +66,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     ingest.add_argument("--source", required=True, help="supported file or directory")
     ingest.add_argument("--output", required=True, help="canonical corpus JSON output")
+    ingest.add_argument("--scope", help="explicit knowledge scope assigned to imported units")
     ingest.add_argument("--format", choices=("json", "text"), default="text")
     demo = commands.add_parser("demo", help="run the bundled SYNTHETIC/DEMO_ONLY scenarios")
     demo_commands = demo.add_subparsers(dest="demo_command")
@@ -213,7 +214,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             payload = _resume_payload(resumed)
             output = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")) if args.format == "json" else "\n".join(f"{key}: {value}" for key, value in payload.items())
         elif args.command == "ingest":
-            result = ingest_to_corpus(args.source, args.output)
+            result = ingest_to_corpus(args.source, args.output, scope=args.scope)
             diagnostics = batch_diagnostics(result)
             if diagnostics:
                 print(

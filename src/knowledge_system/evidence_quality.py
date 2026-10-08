@@ -58,6 +58,16 @@ _SIGNAL_ORDER = {
 }
 
 
+_CONTEXT_DEPENDENT_PARAGRAPHS = frozenset(
+    {
+        "然后问：",
+        "而是：",
+        "完全一致。",
+        "初学时很容易理解成：",
+    }
+)
+
+
 def _signal(
     evidence: Evidence,
     signal_type: EvidenceQualitySignalType,
@@ -139,6 +149,19 @@ def detect_evidence_quality(
         raise TypeError("rule_extraction must be a RuleExtractionResult or None")
 
     signals: list[EvidenceQualitySignal] = []
+
+    if (
+        knowledge_unit is not None
+        and knowledge_unit.metadata.get("structure_kind") == "paragraph"
+        and evidence.original_content.strip() in _CONTEXT_DEPENDENT_PARAGRAPHS
+    ):
+        signals.append(
+            _signal(
+                evidence,
+                EvidenceQualitySignalType.POSSIBLY_INCOMPLETE,
+                "context_dependent_fragment",
+            )
+        )
 
     if not evidence.original_content.strip():
         signals.append(

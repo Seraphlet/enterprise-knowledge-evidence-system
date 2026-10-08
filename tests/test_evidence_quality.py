@@ -22,12 +22,13 @@ def _unit(
     parse_status: ParseStatus = ParseStatus.SUCCESS,
     section: str | None = "审核规则",
     parent_section_id: str | None = "section-audit",
+    structure_kind: str = "section",
 ) -> KnowledgeUnit:
     return KnowledgeUnit(
         unit_id="unit-quality",
         original_content=content,
         semantic_content=f"审核规则\n{content}",
-        metadata={"structure_kind": "section"},
+        metadata={"structure_kind": structure_kind},
         source_reference=SourceReference(
             name="审核规则.html",
             url="https://kb.example/rules",
@@ -57,6 +58,45 @@ def _evidence(unit: KnowledgeUnit) -> Evidence:
 
 
 class EvidenceQualityTest(unittest.TestCase):
+    def test_context_dependent_markdown_fragments_are_flagged(self) -> None:
+        for content in (
+            "然后问：",
+            "而是：",
+            "完全一致。",
+            "初学时很容易理解成：",
+        ):
+            with self.subTest(content=content):
+                unit = _unit(content, structure_kind="paragraph")
+
+                signals = detect_evidence_quality(
+                    _evidence(unit), knowledge_unit=unit
+                )
+
+                self.assertEqual(len(signals), 1)
+                self.assertEqual(
+                    signals[0].signal_type,
+                    EvidenceQualitySignalType.POSSIBLY_INCOMPLETE,
+                )
+                self.assertEqual(
+                    signals[0].reason, "context_dependent_fragment"
+                )
+
+    def test_short_structural_blocks_and_independent_fact_are_not_flagged(self) -> None:
+        cases = (
+            ("# Python 工程最小结构", "heading"),
+            ("`main.py`", "code"),
+            ("默认端口是 8080。", "paragraph"),
+        )
+        for content, structure_kind in cases:
+            with self.subTest(content=content, structure_kind=structure_kind):
+                unit = _unit(content, structure_kind=structure_kind)
+
+                signals = detect_evidence_quality(
+                    _evidence(unit), knowledge_unit=unit
+                )
+
+                self.assertEqual(signals, ())
+
     def test_empty_source_content_is_incomplete_and_missing_context(self) -> None:
         unit = _unit(" ")
         signals = detect_evidence_quality(

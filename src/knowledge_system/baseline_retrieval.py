@@ -179,13 +179,16 @@ class BaselineRetrieval:
 
     def browse(
         self,
-        scope: str,
+        scope: str | None,
         *,
         document: str | None = None,
         section: str | None = None,
         raw_query: str | None = None,
     ) -> BaselineResult:
-        """Return the full eligible set in a covered scope and source location."""
+        """Return an eligible scope, or one explicit document when scope is absent."""
+
+        if scope is None and document is None:
+            raise ValueError("scope-less browsing requires a document identity")
 
         units = self._scope_units(scope)
         raw = raw_query or " ".join(
@@ -245,3 +248,15 @@ class BaselineRetrieval:
                 final=evidence,
             ),
         )
+
+    def resolve_document_identity(self, raw_query: str) -> str | None:
+        """Resolve one complete source name from filtered candidates without inference."""
+
+        matches = {
+            (unit.lineage.document_id, unit.source_reference.name)
+            for unit in self._eligible_units
+            if unit.source_reference.name in raw_query
+        }
+        if len(matches) != 1:
+            return None
+        return next(iter(matches))[1]

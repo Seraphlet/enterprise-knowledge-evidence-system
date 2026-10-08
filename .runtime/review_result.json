@@ -1,156 +1,192 @@
 {
   "actor": "reviewer",
-  "task_id": "P14-GATE",
-  "based_on_runtime_version": 233,
+  "task_id": "V01-GATE-R1",
+  "based_on_runtime_version": 251,
   "result": "PASS",
-  "phase": "P14",
-  "verified_checkpoint_allowed": true,
-  "final_review_allowed": false,
-  "guard": {
+  "summary": "V01-T3-FIX1 已消除 mixed PARTIAL+SUCCESS 恢复泄漏：不可靠邻居被逐条排除，可靠同源上下文仍可有限恢复；无可靠邻居时保持 EVIDENCE_INSUFFICIENT/Verification REQUIRED。完整兼容回归 390/390 通过，真实 3 文件/2,325-unit 导入、确定性、T1-T4 关键 E2E 与冻结不变量均通过。允许 Orchestrator 建立 V0.1 verified checkpoint。",
+  "scope_review": {
     "human_runtime_state": "RUN",
-    "runtime_status": "REVIEWING",
+    "runtime_version": 251,
     "expected_actor": "reviewer",
-    "assigned_to": "reviewer",
-    "current_task": "P14-GATE",
-    "runtime_version": 233,
-    "based_on_runtime_version": 233,
-    "writable_scope": [".runtime/review_result.json"],
-    "result": "PASS"
+    "review_only_scope_respected": true,
+    "only_written_file": ".runtime/review_result.json",
+    "protected_contracts_modified": false,
+    "implementation_modified_by_reviewer": false,
+    "structural_block": false,
+    "diff_check": "PASS; only LF-to-CRLF notices",
+    "fix_scope": "R1 only changes service recovery's per-Evidence quality filtering and adds one mixed-quality regression; T1/T2/T4, filters, recovery actions/round limits and frozen contracts are unchanged."
   },
-  "review_scope": {
-    "implemented_formats": ["HTML", "Markdown", "CSV"],
-    "excluded_formats_confirmed": ["Text", "DOCX", "XLS", "XLSX", "PDF", "image", "OCR"],
-    "changed_source_reviewed": [
-      "src/knowledge_system/ingestion/router.py",
-      "src/knowledge_system/ingestion/markdown.py",
-      "src/knowledge_system/ingestion/csv.py",
+  "r1_failure_reverification": {
+    "mixed_quality_input": "same document/section/parent: before-partial(PARTIAL), fragment(SUCCESS), after-good(SUCCESS); query=然后问：; scope=python-learning; top_k=1",
+    "evidence_ids": ["evidence-fragment", "evidence-after-good"],
+    "parse_statuses": ["SUCCESS", "SUCCESS"],
+    "excluded_ids": ["evidence-before-partial"],
+    "boundary": "NONE",
+    "verification_required": false,
+    "quality_signal_retained": "POSSIBLY_INCOMPLETE on original fragment, resolved by bounded context",
+    "trace": {
+      "rounds": 1,
+      "action": "NEIGHBOR_EXPANSION",
+      "recovered_evidence_ids": ["evidence-after-good"]
+    },
+    "no_reliable_neighbor": {
+      "final_evidence_ids": ["evidence-fragment"],
+      "parse_statuses": ["SUCCESS"],
+      "boundary": "EVIDENCE_INSUFFICIENT",
+      "verification_required": true,
+      "verification_reasons": ["POSSIBLY_INCOMPLETE"],
+      "recovery_rounds": 2,
+      "actions": ["NEIGHBOR_EXPANSION", "PARENT_UNIT"],
+      "failure_reason": "bounded_context_not_sufficient",
+      "recovered_evidence_ids": [],
+      "excluded_boundaries": ["PARTIAL", "permission denied", "inactive", "other scope", "other document", "other section/parent"]
+    },
+    "assessment": "PASS: recovered Evidence is checked individually; unreliable Evidence neither enters final Evidence nor successful recovery trace."
+  },
+  "full_regression": {
+    "environment": "Bundled Python 3.12.14; PYTHONPATH=<repo>\\src; bundled runtime has no pytest.",
+    "method": "Short-lived read-only compatibility driver imported all 47 test_*.py modules, ran unittest suites and expanded pytest-style plain functions with raises/parametrize/tmp_path/monkeypatch adapters.",
+    "modules": 47,
+    "executions": 390,
+    "unittest_executions": 270,
+    "plain_function_and_parametrized_executions": 120,
+    "passed": 390,
+    "failed": 0,
+    "errors": 0,
+    "elapsed_seconds": 2.779,
+    "exit_code": 0,
+    "note": "The compatibility driver did not modify repository files. Test count increased by one from the first Gate because the mixed-quality regression is now included."
+  },
+  "root_causes_and_repairs": [
+    {
+      "task": "T1",
+      "root_cause": "Ingestion did not propagate scope and scope-less document Browse was not connected to Source Navigation.",
+      "repair": "Explicit ingest --scope plus unique complete-document navigation over hard-filtered candidates.",
+      "before": "Real Browse blocked for missing scope.",
+      "after": "python-learning Browse returns 2,325; unknown weather scope is OUT_OF_SCOPE/0; FastAI.md navigation without scope returns 733."
+    },
+    {
+      "task": "T2",
+      "root_cause": "Bare collection/domain words such as 哪些/目录 over-triggered Browse.",
+      "repair": "Browse requires explicit collection-navigation construction; concrete topic questions use Discover.",
+      "before": "Target question was BROWSE and scope-blocked.",
+      "after": "Target question is DISCOVER/NONE and performs retrieval without scope clarification."
+    },
+    {
+      "task": "T3",
+      "root_cause": "Context-dependent Markdown blocks were valid retrieval units but service did not invoke bounded source recovery; initial repair treated mixed-quality recovered batches atomically.",
+      "repair": "Conservative fragment signal, filtered same-source bounded recovery, per-recovered-Evidence quality filtering and traceable failure when no reliable context exists.",
+      "before": "Isolated transition fragments could appear sufficient; mixed PARTIAL+SUCCESS recovery could leak PARTIAL Evidence with NOT_REQUIRED.",
+      "after": "Real fragment receives same-section context; PARTIAL neighbor is excluded; no-clean path requires Verification; exact Locate remains intact."
+    },
+    {
+      "task": "T4",
+      "root_cause": "Apply used ordinary retrieval post-processing and equated Source presence with answerability; existing rule/fact/compare chain was bypassed.",
+      "repair": "NOT_REQUIRED only after reliable Rule Structure, required Case facts and deterministic comparison; weak Markdown and incomplete comparisons require Verification.",
+      "before": "Real Apply returned comparison=null with NOT_REQUIRED.",
+      "after": "Real Apply is EVIDENCE_INSUFFICIENT/rule_structure_unavailable/REQUIRED; explicit synthetic rule is SATISFIED/NOT_REQUIRED; missing fact is INDETERMINATE/case_information_missing/REQUIRED."
+    }
+  ],
+  "real_corpus_e2e": {
+    "source": "C:\\Users\\Think\\Desktop\\PersonKnowledge\\Md (read-only)",
+    "temporary_output_only": true,
+    "scope": "python-learning",
+    "ingestion": {
+      "status": "SUCCESS",
+      "input_files": 3,
+      "written_units": 2325,
+      "source_counts": {"FastAI.md": 733, "Python工程基础面试补缺.md": 982, "手册.md": 610},
+      "parse_status": {"SUCCESS": 2325},
+      "missing_source": 0,
+      "missing_lineage": 0,
+      "empty_original_content": 0,
+      "wrong_scope": 0,
+      "duplicate_unit_ids": 0,
+      "repeat_import_byte_equal": true,
+      "sha256": "464a559a9275d4ce6335485b15a4ec9d74b98bfb92928a016b62080aa55a713a",
+      "elapsed_seconds": 2.299
+    },
+    "t1": {
+      "scoped_browse": "BROWSE/NONE/2325",
+      "unknown_scope": "OUT_OF_SCOPE/OUT_OF_SCOPE/0",
+      "document_navigation": "BROWSE/NONE/733 for FastAI.md without scope"
+    },
+    "t2": {
+      "input": "一个规范的 Python 项目通常应该包含哪些基本目录和配置文件？",
+      "result": "DISCOVER/NONE; no RETRIEVAL_QUERY_INSUFFICIENT",
+      "ranking_note": "Target section was not in this top-10 run; ranking optimization remains an explicit non-goal."
+    },
+    "t3": {
+      "fragment": "然后问：",
+      "result": "DISCOVER/NONE/3 Evidence",
+      "trace": "one NEIGHBOR_EXPANSION round with two same-document/same-section neighbors",
+      "exact_locate": "LOCATE/NONE; first Evidence is # 65. Python 工程最小结构"
+    },
+    "t4": {
+      "real_apply": "APPLY/EVIDENCE_INSUFFICIENT/REQUIRED/rule_structure_unavailable/comparison=null",
+      "synthetic_positive": "SATISFIED/NONE/NOT_REQUIRED",
+      "synthetic_missing_fact": "INDETERMINATE/EVIDENCE_INSUFFICIENT/case_information_missing/REQUIRED"
+    },
+    "out_of_scope": "明天北京天气怎么样？ with weather scope => OUT_OF_SCOPE/0 Evidence/no general answer"
+  },
+  "invariants": {
+    "source_lineage_original_scope": "PASS on all 2,325 units",
+    "permission_status_scope_hard_filters": "PASS in full regression and adversarial recovery",
+    "document_section_parent_recovery_boundaries": "PASS",
+    "out_of_scope_no_general_answer": "PASS",
+    "deterministic_ingestion": "PASS, byte-identical repeated corpus",
+    "deterministic_query": "PASS in automated regression",
+    "exact_locate": "PASS",
+    "retrieved_not_answerable": "PASS",
+    "grounding_failure_enters_verification": "PASS",
+    "rule_source_and_case_provenance": "PASS in regression and synthetic Apply checks",
+    "human_final_responsibility": "PASS, unchanged"
+  },
+  "changed_files": {
+    "implementation": [
+      "src/knowledge_system/baseline_retrieval.py",
+      "src/knowledge_system/cli.py",
+      "src/knowledge_system/evidence_quality.py",
       "src/knowledge_system/ingestion/batch.py",
-      "src/knowledge_system/ingestion/__init__.py",
-      "src/knowledge_system/knowledge_units.py",
-      "src/knowledge_system/cli.py"
+      "src/knowledge_system/request_classification.py",
+      "src/knowledge_system/service.py"
     ],
-    "phase14_tests_reviewed": [
-      "tests/test_ingestion_router.py",
-      "tests/test_markdown_ingestion.py",
-      "tests/test_csv_ingestion.py",
-      "tests/test_batch_ingestion.py"
+    "tests": [
+      "tests/test_batch_ingestion.py",
+      "tests/test_evidence_quality.py",
+      "tests/test_request_classification.py",
+      "tests/test_service_cli.py"
     ],
-    "necessary_html_regressions_reviewed": [
-      "tests/test_html_ingestion.py",
-      "tests/test_knowledge_units.py"
-    ],
-    "diff_boundary": "PASS: implementation adds only the three contracted formats, unified routing/results, structural unit conversion, deterministic batch merge, atomic corpus output and ingest CLI. Existing HTML parser/converter is reused. No index rebuild, network, LLM or unrelated product mechanism was added."
+    "frozen_contracts": []
   },
-  "environment": {
-    "python": "C:\\Users\\Think\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
-    "pytest": "unavailable: No module named pytest",
-    "runner": "Python 3.12 unittest",
-    "pythonpath": "repository src directory"
+  "unresolved_and_non_goals": [
+    "Discover ranking/top-k quality remains outside this V0.1 bugfix; the real target was not in this top-10 run.",
+    "top_k=20 INVALID_INPUT remains a separate recorded issue and did not affect T1-T4 delivery.",
+    "No external embedding/vector service, new reranker, LLM classifier, rule DSL, OCR/PDF/Excel, deployment or distributed authorization was added.",
+    "No performance/load/soak or production authorization-provider evaluation was performed.",
+    "The fragment quality detector intentionally covers the four observed exact transition fragments; broader linguistic generalization was not added."
+  ],
+  "reproducible_windows_powershell": [
+    "$Repo='C:\\Users\\Think\\Documents\\ChatGPT\\nologie\\knowledge-system-worker-pack'; Set-Location $Repo; $env:PYTHONPATH=(Resolve-Path '.\\src').Path",
+    "$PY='C:\\Users\\Think\\AppData\\Local\\Programs\\Python\\Python314\\python.exe'; & $PY -m pytest -q",
+    "$Source='C:\\Users\\Think\\Desktop\\PersonKnowledge\\Md'; $Out=Join-Path $env:TEMP 'knowledge-v01-gate-r1.json'; & $PY -m knowledge_system ingest --source $Source --output $Out --scope python-learning --format json",
+    "& $PY -m knowledge_system query --corpus $Out --query '浏览 python-learning 范围内的全部知识' --scope python-learning --session-id gate-browse --top-k 10 --format json",
+    "& $PY -m knowledge_system query --corpus $Out --query '浏览 FastAI.md' --session-id gate-document --top-k 10 --format json",
+    "& $PY -m knowledge_system query --corpus $Out --query '一个规范的 Python 项目通常应该包含哪些基本目录和配置文件？' --session-id gate-discover --top-k 10 --format json",
+    "& $PY -m knowledge_system query --corpus $Out --query '然后问：' --scope python-learning --session-id gate-fragment --top-k 1 --format json",
+    "& $PY -m knowledge_system query --corpus $Out --query '定位 Python 工程最小结构' --scope python-learning --session-id gate-locate --top-k 5 --format json",
+    "& $PY -m knowledge_system query --corpus $Out --query '我的 Python 项目只有 main.py，没有 pyproject.toml，是否符合 Python 工程最小结构？' --scope python-learning --session-id gate-apply --top-k 5 --format json",
+    "& $PY -m knowledge_system query --corpus $Out --query '明天北京天气怎么样？' --scope weather --session-id gate-oos --top-k 5 --format json"
+  ],
+  "checkpoint": {
+    "allowed": true,
+    "name": "V0.1-GATE",
+    "reason": "All V0.1 acceptance criteria, R1 failure regression, full compatibility regression and real-corpus critical E2E passed with no unexplained structural failure."
   },
-  "commands": [
-    {
-      "command": "bundled-python -m pytest --version",
-      "result": "UNAVAILABLE",
-      "evidence": "No module named pytest; no tests were attempted by pytest."
-    },
-    {
-      "command": "bundled-python -m compileall -q src/knowledge_system/ingestion/router.py src/knowledge_system/ingestion/markdown.py src/knowledge_system/ingestion/csv.py src/knowledge_system/ingestion/batch.py src/knowledge_system/knowledge_units.py src/knowledge_system/cli.py",
-      "result": "PASS",
-      "evidence": "exit code 0; no compile errors"
-    },
-    {
-      "command": "PYTHONPATH=src bundled-python -c import knowledge_system.ingestion, knowledge_system.knowledge_units, knowledge_system.cli",
-      "result": "PASS",
-      "evidence": "P14_IMPORT_OK"
-    },
-    {
-      "command": "PYTHONPATH=src bundled-python -m unittest -v tests/test_ingestion_router.py tests/test_markdown_ingestion.py tests/test_csv_ingestion.py tests/test_batch_ingestion.py tests/test_html_ingestion.py tests/test_knowledge_units.py",
-      "result": "PASS",
-      "evidence": "Ran 36 tests in 0.317s; OK; 36 passed, 0 failed, 0 skipped"
-    },
-    {
-      "command": "git diff --check -- src/knowledge_system tests/test_ingestion_router.py tests/test_markdown_ingestion.py tests/test_csv_ingestion.py tests/test_batch_ingestion.py tests/test_html_ingestion.py tests/test_knowledge_units.py",
-      "result": "PASS",
-      "evidence": "No implementation or scoped-test whitespace errors."
-    }
-  ],
-  "test_matrix": [
-    {
-      "scope": "unified ingestion router and HTML adapter",
-      "tests": 5,
-      "passed": 5,
-      "failed": 0,
-      "evidence": "case-insensitive HTML/HTM/MD/MARKDOWN/CSV identification, unsupported extension, explicit registry boundary, existing HTML reuse, stable units and safe read/empty failures"
-    },
-    {
-      "scope": "Markdown structural ingestion",
-      "tests": 5,
-      "passed": 5,
-      "failed": 0,
-      "evidence": "heading hierarchy and paths, ordered paragraph/list/quote/fenced-code/table blocks, source preservation, stable unit IDs, SourceReference, lineage, UTF-8-SIG, FAILED/PARTIAL and safe decode/read errors"
-    },
-    {
-      "scope": "CSV row ingestion",
-      "tests": 6,
-      "passed": 6,
-      "failed": 0,
-      "evidence": "ordered header-value relations, stable row units, BOM, multiline physical line ranges, empty/duplicate headers, short/long rows, invalid encoding/syntax and reliable PARTIAL retention"
-    },
-    {
-      "scope": "mixed batch, CLI, corpus and query integration",
-      "tests": 13,
-      "passed": 13,
-      "failed": 0,
-      "evidence": "mixed HTML/Markdown/CSV directory to canonical corpus to load_knowledge_units/KnowledgeService.query, deterministic order and byte-identical rerun, parser lineage, single-file path, exact dedupe, strict unit_id conflict, PARTIAL/FAILED aggregation, safe input errors, atomic replacement preservation and CLI exit/stdout/stderr boundaries"
-    },
-    {
-      "scope": "necessary existing HTML impact regression",
-      "tests": 7,
-      "passed": 7,
-      "failed": 0,
-      "evidence": "HTML source/structure/status behavior and existing structure-aware KnowledgeUnit stability, source/lineage and content separation remain intact"
-    }
-  ],
-  "acceptance_evidence": {
-    "mixed_to_query_minimal_chain": "PASS: a mixed nested directory containing HTML, Markdown and CSV produced a canonical corpus; load_knowledge_units read all written units and KnowledgeService.query returned Evidence.",
-    "determinism": "PASS: two independent writes from the same mixed source were byte-identical and BatchIngestionResult dictionaries were equal; discovery order was deterministic and case-insensitive.",
-    "stable_identity_and_provenance": "PASS: unit IDs repeat across reruns; SourceReference retains source filename/location without fabricated page/sheet; lineage document/source positions and parser/chunker/processing versions are present. Stable source identity is represented by lineage.document_id under the frozen core contract.",
-    "markdown_structure": "PASS: ATX heading hierarchy and ordered heading/paragraph/list/quote/fenced-code/table units preserve original content and line provenance; unclosed fences are PARTIAL and empty input is FAILED.",
-    "csv_structure": "PASS: header-to-value relation is positional, every reliable row has physical start/end lines, multiline records retain ranges, header/width anomalies are audited, invalid or late syntax is FAILED/PARTIAL as appropriate.",
-    "dedupe_and_conflict": "PASS: exact duplicate units are counted and retained once in first-seen order; same unit_id with differing content or provenance fails closed before replacing output.",
-    "safe_failures": "PASS: unsupported/missing/unreadable/no-supported inputs, invalid encodings, malformed content and output overlap produce stable safe errors without traceback leakage.",
-    "atomic_output": "PASS: serialization and os.replace failure preserve existing output and remove temporary files; all-failed ingestion does not replace output."
-  },
-  "scope_audit": {
-    "result": "PASS",
-    "reviewer_written_files": [".runtime/review_result.json"],
-    "business_source_modified": false,
-    "tests_modified": false,
-    "frozen_contracts_modified_by_reviewer": false,
-    "state_current_events_builder_result_modified_by_reviewer": false,
-    "git_index_or_history_modified": false,
-    "builder_scope_attribution": "PASS based on Phase 14 events 225-232 and T-1403 builder_result; Human contract updates and Orchestrator runtime transitions predate this review."
-  },
-  "non_blocking_observations": [
-    "A repository-wide git diff --check reports one trailing-whitespace line in Human-updated SYSTEM.md. The Phase 14 implementation/test-scoped diff check is clean; the formatting-only contract observation does not affect Gate behavior and this Reviewer did not edit the frozen file.",
-    "pytest is not installed in the bundled runtime, so the six explicitly authorized modules were executed with their native unittest runner; no compatibility shim or test omission was needed."
-  ],
-  "not_run": [
-    "all other tests/test_*.py modules",
-    "project full regression",
-    "Golden Dataset",
-    "Final Review",
-    "demo scenarios",
-    "embedding/index rebuild",
-    "network or LLM evaluation",
-    "load, performance, soak or concurrency tests"
-  ],
-  "coverage_limits": [
-    "This is a Phase 14 ingestion Gate, not a new release-level regression or Final Review.",
-    "Only HTML, Markdown and CSV are accepted; excluded formats were not implemented or functionally tested.",
-    "Filesystem permission behavior was exercised through deterministic mocks and temporary directories, not OS ACL mutation.",
-    "Real confidential enterprise documents and production-scale corpora were not used."
-  ],
-  "failure_evidence": [],
-  "conclusion": "P14-GATE PASS. All 36 authorized focused/integration/necessary HTML regression tests pass with no failures or skips; changed-source compile/import checks pass. The three-format mixed ingestion path is deterministic, traceable, query-readable, strict on conflicts and atomic on output failure. A new Phase 14 verified checkpoint is allowed. Full regression, Golden Dataset, Final Review, demos and unrelated tests were explicitly not run."
+  "reviewer_scope_audit": {
+    "runtime_version_rechecked_before_write": 251,
+    "human_runtime_state_rechecked_before_write": "RUN",
+    "actor_and_task_match": true,
+    "git_index_or_history_modified": false
+  }
 }

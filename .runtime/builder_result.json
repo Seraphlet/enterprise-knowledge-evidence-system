@@ -1,183 +1,108 @@
 {
   "actor": "builder",
-  "task_id": "T-1403",
-  "based_on_runtime_version": 231,
+  "task_id": "V01-T3-FIX1",
+  "based_on_runtime_version": 249,
   "status": "READY_FOR_REVIEW",
-  "phase": "P14",
-  "summary": "Completed the logical Phase 14 merge point: the ingest CLI now routes one supported file or a deterministically discovered mixed directory through the existing unified registry, strictly merges KnowledgeUnits, emits an auditable per-source summary, and atomically writes a canonical corpus that the query loader can consume. Automated execution remains intentionally deferred to P14-GATE.",
-  "interrupted_work_audit": {
-    "result": "PRESERVED_AND_COMPLETED",
-    "observed_on_resume": [
-      "src/knowledge_system/ingestion/batch.py, the ingest CLI branch, ingestion exports, and tests/test_batch_ingestion.py existed as legitimate unfinished T-1403 work.",
-      ".runtime/builder_result.json was deleted/missing, consistent with the interrupted handoff.",
-      "The dirty worktree also contained prior T-1400 through T-1402 implementation/tests plus Orchestrator/Human contract and runtime updates; these were treated as inherited work and were not reverted or overwritten."
-    ],
-    "actions": [
-      "Reviewed the interrupted batch/CLI implementation against every current_task acceptance criterion.",
-      "Kept the existing parser/registry integration and completed missing static test coverage for single-file ingestion, deterministic discovery, three-format provenance, all-failed behavior, unreadable directories, input/output overlap, serialization safety, atomic replacement safety, and CLI conflict boundaries.",
-      "Did not modify protected contracts, Orchestrator-owned runtime files, or prior format parser/converter implementations."
-    ]
+  "phase": "V0.1",
+  "summary": "Recovered Evidence 现在逐条通过既有 Evidence Quality 检查；带 PARTIAL 或其他质量信号的邻居不会再随可靠邻居一起进入 RESOLVED 输出。",
+  "root_cause": "service._recovery_executor 使用 any(clean) 判断整批 recovered Evidence 可用，但将 selected 全部返回；run_limited_recovery 因 remaining_signals 为空把整批标为 RESOLVED，导致 PARTIAL Evidence 绕过 Verification。",
+  "pre_fix_failure": {
+    "command": "$env:PYTHONPATH=<repo>\\src; <bundled-python> -c \"invoke test_fragment_recovery_excludes_partial_neighbor_when_clean_context_remains\"",
+    "result": "FAILED_AS_EXPECTED",
+    "count": 1,
+    "input": "同 document/section/parent：before-partial(PARTIAL, 规则片段：)、fragment(SUCCESS, 然后问：)、after-good(SUCCESS, 项目至少需要 pyproject.toml。)；query=然后问：；scope=python-learning；top_k=1",
+    "observed_evidence_ids": ["evidence-fragment", "evidence-before-partial", "evidence-after-good"],
+    "observed_parse_statuses": ["SUCCESS", "PARTIAL", "SUCCESS"],
+    "boundary": "NONE",
+    "verification_required": false,
+    "trace_recovered_evidence_ids": ["evidence-before-partial", "evidence-after-good"]
   },
-  "changed_files": [
-    "src/knowledge_system/ingestion/batch.py",
-    "src/knowledge_system/ingestion/__init__.py",
-    "src/knowledge_system/cli.py",
-    "tests/test_batch_ingestion.py",
-    ".runtime/builder_result.json"
+  "implementation": [
+    "在既有 _recovery_executor 内为每个 selected KnowledgeUnit 构造 Evidence 后逐条调用 detect_evidence_quality。",
+    "只把无任何质量信号的 recovered Evidence 交给 limited recovery；不可靠邻居被安全排除，不成为最终 Evidence 或 RESOLVED trace 的 recovered Evidence。",
+    "若本轮没有可靠 recovered Evidence，则保持原 fragment signals，返回 bounded_context_not_sufficient，沿既有两轮有限恢复路径继续；最终仍无可靠上下文时进入 EVIDENCE_INSUFFICIENT / Verification REQUIRED。",
+    "未修改质量检测 allowlist、恢复动作/轮数/数量、candidate filters、T1/T2/T4 或任何冻结契约。"
   ],
-  "coverage_matrix": [
-    {
-      "criterion": "ingest CLI accepts --source/--output for one file or a directory and discovers only HTML/HTM/MD/MARKDOWN/CSV in deterministic order",
-      "result": "COVERED_STATICALLY",
-      "evidence": "cli.py registers the ingest subcommand; discover_source_files filters via identify_format and sorts by casefolded relative POSIX path with an exact-path tie-breaker. Test drafts cover one file, mixed nested directories, case-insensitive extensions, ignored .txt files, and exact expected order."
-    },
-    {
-      "criterion": "safe input boundary without creating or damaging output",
-      "result": "COVERED_STATICALLY",
-      "evidence": "BatchIngestionError codes cover missing source, unsupported file, invalid source type, unreadable directory, no supported files, path resolution, and output/source overlap. Discovery and conflict happen before writing; test drafts retain sentinel output for bad inputs and retain the source on overlap."
-    },
-    {
-      "criterion": "registry/parser reuse and deterministic merge/output bytes",
-      "result": "COVERED_STATICALLY",
-      "evidence": "ingest_sources calls the unified ingest_file for every discovered path and contains no format parser. canonical_corpus_json uses ensure_ascii=False, sort_keys=True and compact separators; ordered source iteration and first-seen units are stable. Mixed-directory draft compares byte-identical outputs across two runs."
-    },
-    {
-      "criterion": "canonical corpus is directly readable/queryable",
-      "result": "COVERED_STATICALLY",
-      "evidence": "canonical_corpus_json writes a top-level array of KnowledgeUnit.to_dict objects. The integration draft reads it with load_knowledge_units and constructs KnowledgeService.query evidence. No optional --scope mutation was implemented."
-    },
-    {
-      "criterion": "strict unit_id deduplication and conflict failure",
-      "result": "COVERED_STATICALLY",
-      "evidence": "Each unit is compared by a canonical serialization of the full KnowledgeUnit. Exact duplicates increment deduplicated_unit_count; the same unit_id with any content, metadata, source reference, lineage, or status difference raises UNIT_ID_CONFLICT before output replacement."
-    },
-    {
-      "criterion": "SUCCESS/PARTIAL/FAILED aggregation and auditable counts/issues",
-      "result": "COVERED_STATICALLY",
-      "evidence": "BatchIngestionResult reports aggregate status, input/written/deduplicated counts, output_written, status counts, and ordered per-source format/status/unit_count/warnings/errors. Reliable PARTIAL units remain writable; all-failed sources produce no corpus replacement."
-    },
-    {
-      "criterion": "atomic output and preservation on serialization/write failure",
-      "result": "COVERED_STATICALLY",
-      "evidence": "write_corpus_atomic serializes before opening a temp file, creates the temp beside the target, flushes/fsyncs it, then uses os.replace; the finally block removes an uncommitted temp. Drafts inject serialization and replace failures and assert the prior output and temp hygiene."
-    },
-    {
-      "criterion": "stable CLI stdout/stderr/exit behavior with no query/index/network/LLM side effect",
-      "result": "COVERED_STATICALLY",
-      "evidence": "Successful/PARTIAL summaries go to stdout as stable JSON or deterministic text; warnings/errors go to stderr JSON. FAILED results and BatchIngestionError use EXIT_INPUT_ERROR=2; unexpected exceptions retain EXIT_INTERNAL_ERROR=3 without traceback. Static search found no network, LLM, index rebuild, or query invocation in batch.py."
-    },
-    {
-      "criterion": "focused and Phase 14 integration test authorship",
-      "result": "AUTHORED_NOT_RUN",
-      "evidence": "tests/test_batch_ingestion.py now drafts 13 focused/integration cases spanning single file, mixed directory, repeat stability, three parser lineage versions, query loading, exact dedup, conflicts, PARTIAL/FAILED, input boundaries, serialization/atomic replacement, and CLI streams/exit codes. Existing deferred T-1400/T-1401/T-1402 drafts remain intact."
-    },
-    {
-      "criterion": "writable scope and Phase 14 execution prohibition",
-      "result": "COVERED",
-      "evidence": "Only current_task writable files were written. No Python interpreter, pytest/unittest, compile/import smoke, CLI execution, phase integration, or regression command was run."
-    }
-  ],
+  "design_choice": "采用‘排除坏邻居并以剩余可靠上下文解决’。该 fixture 的 after-good 是同 document/section/parent、同 scope 且无质量信号的完整事实，因此足以补足 fragment；PARTIAL 邻居既不展示也不用于成功判定。若没有任何可靠邻居则保持 unresolved，而不是把坏 Evidence 放进输出。",
+  "post_fix_evidence": {
+    "evidence_ids": ["evidence-fragment", "evidence-after-good"],
+    "parse_statuses": ["SUCCESS", "SUCCESS"],
+    "excluded_evidence_ids": ["evidence-before-partial"],
+    "boundary": "NONE",
+    "verification_required": false,
+    "verification_reasons": [],
+    "trace_recovered_evidence_ids": ["evidence-after-good"],
+    "recovery_rounds": 1,
+    "recovery_action": "NEIGHBOR_EXPANSION"
+  },
   "checks": [
     {
-      "name": "runtime concurrency guard",
+      "command": "$env:PYTHONPATH=<repo>\\src; <bundled-python> -c \"invoke new mixed-quality regression\"",
       "result": "PASS",
-      "details": "HUMAN_RUNTIME_STATE=RUN; state runtime_version=231; expected_actor=builder; current_task/assignment=T-1403/builder; based_on_runtime_version=231."
+      "executions": 1
     },
     {
-      "name": "acceptance-oriented source inspection",
-      "result": "PASS_STATIC",
-      "details": "Read batch.py, router.py, all three format loaders/parsers, KnowledgeUnit converters, query corpus loader, CLI, and all Phase 14 test drafts; traced discovery -> ingest_file registry -> strict merge -> canonical serialization -> atomic replacement -> CLI reporting."
-    },
-    {
-      "name": "implementation symbol and side-effect scan",
-      "result": "PASS_STATIC",
-      "details": "Confirmed unified ingest_file call, conflict guard, NamedTemporaryFile + fsync + os.replace, ingest CLI exit boundary, and test coverage markers. No requests/urllib/httpx/openai/vector/rebuild/KnowledgeService/query invocation was found in batch.py."
-    },
-    {
-      "name": "diff whitespace validation",
+      "command": "$env:PYTHONPATH=<repo>\\src; <bundled-python> -m unittest discover -s tests -p 'test_evidence_quality.py' -v",
       "result": "PASS",
-      "details": "git diff --check reported no whitespace errors for tracked T-1403 files; untracked batch/test files were manually inspected because git diff does not report their content until staged, and nothing was staged."
+      "executions": 11
     },
     {
-      "name": "protected and inherited dirty-worktree audit",
-      "result": "PASS_WITH_INHERITED_CHANGES",
-      "details": "Protected SYSTEM.md, BUILD.md, TASKS.md and Orchestrator-owned state/current/events were already modified by the active Phase 14 runtime. This Builder did not write them. PRODUCT.md, DECISIONS.md, HUMAN_RUNTIME_STATE, and review_result were not modified."
+      "command": "$env:PYTHONPATH=<repo>\\src; <bundled-python> -m unittest discover -s tests -p 'test_limited_recovery.py' -v",
+      "result": "PASS",
+      "executions": 8
     },
     {
-      "name": "initial static symbol command",
-      "result": "RETRIED_PASS",
-      "details": "The first read-only rg expression was malformed by PowerShell quoting and returned a regex parse error. It did not execute code or change files; the audit was rerun with separate -e patterns and passed."
+      "command": "$env:PYTHONPATH=<repo>\\src; <bundled-python> -c \"invoke 13 no-fixture focused service tests\"",
+      "result": "PASS",
+      "executions": 13,
+      "details": "覆盖新 mixed-quality 回归、T3 成功/失败恢复，以及必要的 T1 Browse、T2 classification、T4 Apply、permission/status/OOS 相邻行为。"
+    },
+    {
+      "command": "$env:PYTHONPATH=<repo>\\src; <bundled-python> -m compileall -q src\\knowledge_system\\service.py tests\\test_service_cli.py; git diff --check -- src/knowledge_system/service.py tests/test_service_cli.py",
+      "result": "PASS_WITH_EOL_WARNINGS",
+      "executions": 2,
+      "details": "compileall 成功；diff 无 whitespace error，仅 Windows LF-to-CRLF 提示。"
     }
   ],
+  "test_summary": {
+    "pre_fix_expected_failures": 1,
+    "post_fix_test_executions": 33,
+    "post_fix_unique_focused_tests": 32,
+    "post_fix_failures": 0,
+    "full_regression_run": false,
+    "gate_retry_run": false
+  },
+  "invariants": {
+    "same_document_section_parent": true,
+    "permission_status_scope_filters_unchanged": true,
+    "two_round_and_quantity_bounds_unchanged": true,
+    "stable_source_order_unchanged": true,
+    "source_lineage_original_preserved": true,
+    "partial_recovered_evidence_excluded_from_resolved_output": true,
+    "no_clean_recovery_remains_verification_required": true,
+    "exact_locate_logic_unchanged": true
+  },
+  "changed_files": ["src/knowledge_system/service.py", "tests/test_service_cli.py", ".runtime/builder_result.json"],
   "scope_audit": {
     "result": "PASS",
-    "allowed_files_written": [
-      "tests/test_batch_ingestion.py",
-      ".runtime/builder_result.json"
-    ],
-    "interrupted_allowed_files_preserved_as_task_output": [
-      "src/knowledge_system/ingestion/batch.py",
-      "src/knowledge_system/ingestion/__init__.py",
-      "src/knowledge_system/cli.py"
-    ],
-    "protected_contracts_written_by_this_builder": false,
-    "orchestrator_runtime_files_written_by_this_builder": false,
-    "format_parsers_or_knowledge_unit_converters_written_by_this_builder": false,
+    "runtime_version_rechecked_before_result_write": 249,
+    "human_runtime_state": "RUN",
+    "expected_actor": "builder",
+    "current_task": "V01-T3-FIX1",
+    "all_written_files_within_writable_scope": true,
+    "protected_contracts_written": false,
+    "orchestrator_runtime_files_written": false,
+    "review_result_written": false,
     "git_index_or_history_modified": false
   },
+  "shared_dirty_file_note": "service.py 与 test_service_cli.py 在本任务前已包含 V01-T1/T2/T3/T4 的已审工作；本次仅改 service recovery 的逐条质量过滤和新增一个 mixed-quality 回归。",
   "not_run": [
-    "Python interpreter execution of any kind",
-    "pytest, unittest, or any automated test",
-    "compile, py_compile, import smoke, or package import",
-    "knowledge-system ingest/query CLI smoke",
-    "T-1400 HTML/router focused tests",
-    "T-1401 Markdown focused tests",
-    "T-1402 CSV focused tests",
-    "T-1403 batch focused/integration tests",
-    "existing HTML regression tests",
-    "project full regression, Golden Dataset, or Final Review"
+    "项目全量回归（按 BUILD local retry policy 禁止）",
+    "真实 2,325-unit E2E 与 Gate retry（留给独立 Reviewer V01-GATE-R1）",
+    "Discover 排序/top_k 非目标"
   ],
   "risks": [
-    "All behavior is statically audited only; syntax, imports, runtime semantics, and mocked failure paths remain unexecuted until P14-GATE.",
-    "Atomic replacement and permission behavior can vary by operating system/filesystem; P14-GATE should exercise the provided temp-directory failure fixtures on the target Windows environment.",
-    "The inherited T-1400 through T-1402 parser/converter changes are part of the same unverified Phase 14 merge and must be validated together before a new verified checkpoint.",
-    "Source identity intentionally follows the existing format converters (source filename/url). Identical same-named copies can deduplicate, while same unit_id with differing content/provenance fails closed; Gate should confirm this is the desired duplicate-source behavior with real directory fixtures."
-  ],
-  "p14_gate_recommendation": {
-    "reviewer_required": true,
-    "full_project_regression_forbidden": true,
-    "matrix": [
-      {
-        "scope": "format routing and HTML baseline",
-        "suggested_tests": [
-          "tests/test_ingestion_router.py",
-          "tests/test_html_ingestion.py",
-          "relevant HTML cases in tests/test_knowledge_units.py"
-        ],
-        "verify": "case-insensitive HTML/HTM routing, existing HTML behavior, stable units, source references, lineage, and no fabricated page"
-      },
-      {
-        "scope": "Markdown focused",
-        "suggested_tests": [
-          "tests/test_markdown_ingestion.py"
-        ],
-        "verify": "heading paths, structural blocks, code/list/quote/table preservation, stable IDs, UTF-8-SIG, PARTIAL/FAILED and lineage"
-      },
-      {
-        "scope": "CSV focused",
-        "suggested_tests": [
-          "tests/test_csv_ingestion.py"
-        ],
-        "verify": "headers/rows/physical line ranges, BOM, empty/duplicate headers, width mismatches, invalid encoding/syntax, PARTIAL/FAILED and lineage"
-      },
-      {
-        "scope": "mixed batch/CLI/query integration",
-        "suggested_tests": [
-          "tests/test_batch_ingestion.py"
-        ],
-        "verify": "single and mixed directory ingestion, deterministic order and bytes, unsupported-file exclusion, canonical query loading, three-format provenance, exact duplicate counting, strict conflicts, aggregate audit, atomic preservation, stdout/stderr and exit codes"
-      }
-    ],
-    "failure_policy": "If Gate fails, rerun only the failed focused test(s) and necessary adjacent cases after a scoped Builder fix; do not broaden to the full project suite unless evidence shows a shared-component regression."
-  }
+    "质量信号是保守门：任何带信号的恢复邻居都会被排除，即使其部分文本有用；这是避免不可靠 Evidence 静默成功的有意取舍。",
+    "本次仅做 focused retry；完整 V0.1 Gate 不变量与真实语料仍需 Reviewer 复验。"
+  ]
 }

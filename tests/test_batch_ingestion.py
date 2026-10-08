@@ -31,6 +31,28 @@ MARKDOWN = "# Markdown Guide\n\nTraceable Markdown.\n"
 CSV = "Name,Description\nCSV Guide,Traceable CSV\n"
 
 
+def _run_ingest_cli(
+    source: Path, output: Path, scope: str
+) -> tuple[int, str, str]:
+    stdout = io.StringIO()
+    stderr = io.StringIO()
+    with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+        code = main(
+            [
+                "ingest",
+                "--source",
+                str(source),
+                "--output",
+                str(output),
+                "--scope",
+                scope,
+                "--format",
+                "text",
+            ]
+        )
+    return code, stdout.getvalue(), stderr.getvalue()
+
+
 class BatchIngestionTest(unittest.TestCase):
     def test_mixed_directory_is_stable_canonical_and_query_readable(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -87,6 +109,73 @@ class BatchIngestionTest(unittest.TestCase):
             self.assertEqual([item.source_path for item in result.sources], [source.name])
             self.assertEqual(result.written_unit_count, len(units))
             self.assertTrue(all(unit.source_reference.name == source.name for unit in units))
+
+    def test_explicit_scope_is_deterministic_metadata_only(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "guide.md"
+            source.write_text(MARKDOWN, encoding="utf-8")
+            unscoped_output = root / "unscoped.json"
+            first_output = root / "first.json"
+            second_output = root / "second.json"
+
+            ingest_to_corpus(source, unscoped_output)
+            first = ingest_to_corpus(source, first_output, scope="python-learning")
+            second = ingest_to_corpus(source, second_output, scope="python-learning")
+            unscoped = load_knowledge_units(unscoped_output)
+            scoped = load_knowledge_units(first_output)
+            browsed = KnowledgeService(scoped).query(
+                "浏览全部知识",
+                session_id="scoped-ingest-browse",
+                scope="python-learning",
+            )
+
+            self.assertEqual(first_output.read_bytes(), second_output.read_bytes())
+            self.assertEqual(first.to_dict(), second.to_dict())
+            self.assertTrue(scoped)
+            self.assertTrue(
+                all(unit.metadata.get("scope") == "python-learning" for unit in scoped)
+            )
+            self.assertEqual(
+                [unit.unit_id for unit in scoped], [unit.unit_id for unit in unscoped]
+            )
+            self.assertEqual(
+                [unit.source_reference for unit in scoped],
+                [unit.source_reference for unit in unscoped],
+            )
+            self.assertEqual(
+                [unit.lineage for unit in scoped], [unit.lineage for unit in unscoped]
+            )
+            self.assertEqual(
+                [unit.original_content for unit in scoped],
+                [unit.original_content for unit in unscoped],
+            )
+            self.assertEqual(browsed.boundary.value, "NONE")
+            self.assertEqual(
+                [item.unit_id for item in browsed.evidence],
+                [unit.unit_id for unit in scoped],
+            )
+
+    def test_cli_ingest_accepts_explicit_scope(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "guide.md"
+            source.write_text(MARKDOWN, encoding="utf-8")
+            output = root / "corpus.json"
+
+            code, stdout, stderr = _run_ingest_cli(
+                source, output, "python-learning"
+            )
+
+            self.assertEqual(code, EXIT_OK)
+            self.assertEqual(stderr, "")
+            self.assertIn("Status: SUCCESS", stdout)
+            self.assertTrue(
+                all(
+                    unit.metadata.get("scope") == "python-learning"
+                    for unit in load_knowledge_units(output)
+                )
+            )
 
     def test_directory_discovery_uses_relative_casefolded_order_only(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

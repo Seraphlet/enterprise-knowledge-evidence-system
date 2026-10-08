@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import os
 import tempfile
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
@@ -134,11 +134,25 @@ def _canonical_unit(unit: KnowledgeUnit) -> str:
     )
 
 
+def _validated_scope(scope: str | None) -> str | None:
+    if scope is None:
+        return None
+    if not isinstance(scope, str) or not scope.strip():
+        raise BatchIngestionError(
+            "INVALID_SCOPE", "Import scope must be a non-empty explicit value."
+        )
+    return scope.strip()
+
+
 def ingest_sources(
-    source: str | Path, *, _files: tuple[Path, ...] | None = None
+    source: str | Path,
+    *,
+    scope: str | None = None,
+    _files: tuple[Path, ...] | None = None,
 ) -> BatchIngestionResult:
     """Ingest and strictly merge one file or a deterministic directory walk."""
 
+    explicit_scope = _validated_scope(scope)
     source_root = Path(source)
     files = _files if _files is not None else discover_source_files(source_root)
     summaries: list[SourceIngestionSummary] = []
@@ -163,6 +177,10 @@ def ingest_sources(
             )
         )
         for unit in result.units:
+            if explicit_scope is not None:
+                unit = replace(
+                    unit, metadata={**unit.metadata, "scope": explicit_scope}
+                )
             canonical = _canonical_unit(unit)
             existing = by_id.get(unit.unit_id)
             if existing is None:
@@ -250,10 +268,11 @@ def write_corpus_atomic(
 
 
 def ingest_to_corpus(
-    source: str | Path, output: str | Path
+    source: str | Path, output: str | Path, *, scope: str | None = None
 ) -> BatchIngestionResult:
     """Ingest sources and atomically write only a non-empty reliable corpus."""
 
+    explicit_scope = _validated_scope(scope)
     files = discover_source_files(source)
     target = Path(output)
     try:
@@ -268,7 +287,7 @@ def ingest_to_corpus(
             "OUTPUT_OVERLAPS_SOURCE", "Output must not overwrite an input source file."
         )
 
-    result = ingest_sources(source, _files=files)
+    result = ingest_sources(source, scope=explicit_scope, _files=files)
     if result.status is ParseStatus.FAILED or not result.units:
         return result
     write_corpus_atomic(result.units, target)

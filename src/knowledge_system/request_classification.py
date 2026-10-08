@@ -43,8 +43,12 @@ _APPLY_PATTERNS = (
     re.compile(r"\b(?:my|our|this)\s+(?:case|situation|request)\b", re.I),
 )
 _BROWSE_PATTERNS = (
-    re.compile(r"(?:有哪些|有什么|全部|所有|列出|列表|浏览|汇总|目录)"),
-    re.compile(r"\b(?:list|browse|all|catalog|overview)\b", re.I),
+    # Browse requires an explicit collection/navigation intent.  Topic questions
+    # such as "包含哪些目录" still ask for knowledge and must not be
+    # routed to scope-dependent collection browsing merely because they contain
+    # a quantifier or a domain noun.
+    re.compile(r"(?:列出|浏览|汇总)"),
+    re.compile(r"\b(?:list|browse|catalog|overview)\b", re.I),
 )
 _LOCATE_PATTERNS = (
     re.compile(r"(?:在哪里|在哪儿|位置|打开|定位|找到|查找|原文|链接)"),

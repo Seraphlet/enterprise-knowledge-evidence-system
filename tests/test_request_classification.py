@@ -46,6 +46,18 @@ class RequestClassificationTest(unittest.TestCase):
 
         self.assertEqual(result.request_type, KnowledgeRequestType.BROWSE)
 
+    def test_topic_question_is_not_browse_due_to_collection_words(self) -> None:
+        result = classify_request(
+            "一个规范的 Python 项目通常应该包含哪些基本目录和配置文件？"
+        )
+
+        self.assertEqual(result.request_type, KnowledgeRequestType.DISCOVER)
+
+    def test_explicit_scoped_collection_request_remains_browse(self) -> None:
+        result = classify_request("浏览 python-learning 范围内的全部知识")
+
+        self.assertEqual(result.request_type, KnowledgeRequestType.BROWSE)
+
     def test_unknown_wording_does_not_invent_out_of_scope_boundary(self) -> None:
         result = classify_request("差旅费票据")
 

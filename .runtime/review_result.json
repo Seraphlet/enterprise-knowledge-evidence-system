@@ -1,207 +1,156 @@
 {
   "actor": "reviewer",
-  "task_id": "T-1302",
-  "based_on_runtime_version": 221,
+  "task_id": "P14-GATE",
+  "based_on_runtime_version": 233,
   "result": "PASS",
-  "phase": "P13",
+  "phase": "P14",
   "verified_checkpoint_allowed": true,
-  "final_review_allowed": true,
+  "final_review_allowed": false,
   "guard": {
     "human_runtime_state": "RUN",
-    "runtime_status": "V0_COMPLETE_PENDING_REGRESSION",
+    "runtime_status": "REVIEWING",
     "expected_actor": "reviewer",
     "assigned_to": "reviewer",
-    "current_task": "T-1302",
-    "runtime_version": 221,
-    "based_on_runtime_version": 221,
-    "writable_scope": [".runtime/review_result.json"]
+    "current_task": "P14-GATE",
+    "runtime_version": 233,
+    "based_on_runtime_version": 233,
+    "writable_scope": [".runtime/review_result.json"],
+    "result": "PASS"
   },
-  "full_regression": {
-    "result": "PASS",
-    "environment": "Bundled Python 3.12.14; pytest unavailable, so an in-memory compatibility runner was used without repository writes.",
-    "discovery": {
-      "test_modules": 43,
-      "pytest_style_functions": 103,
-      "unittest_methods": 235,
-      "raw_test_functions_and_methods": 338,
-      "expanded_executions": 346,
-      "passed": 346,
-      "failed": 0,
-      "skipped": 0,
-      "omitted": 0,
-      "fixtures": ["pytest.raises", "pytest.mark.parametrize", "tmp_path", "monkeypatch.setattr"]
-    },
-    "modules": [
-      "test_agent_state", "test_apply_compare", "test_baseline_retrieval", "test_baseline_trace", "test_candidate_filter", "test_clarification", "test_context", "test_contracts", "test_demo_runner", "test_deterministic_comparison", "test_discover_retrieval", "test_evaluation_adapters", "test_evaluation_metrics", "test_evidence_map", "test_evidence_map_plan", "test_evidence_quality", "test_fact_extraction", "test_failure_diagnosis", "test_feedback_log", "test_golden_dataset", "test_grounded_organizer", "test_html_ingestion", "test_hybrid_retrieval", "test_incremental_update", "test_information_requirements", "test_keyword_index", "test_knowledge_units", "test_limited_recovery", "test_p10_f001", "test_p6_gate_regressions", "test_product_graph", "test_reference_guard", "test_regression_runner", "test_request_classification", "test_rule_authority", "test_rule_structure", "test_service_cli", "test_session_snapshot", "test_smoke", "test_source_navigation", "test_system_state", "test_vector_index", "test_verification_mode"
+  "review_scope": {
+    "implemented_formats": ["HTML", "Markdown", "CSV"],
+    "excluded_formats_confirmed": ["Text", "DOCX", "XLS", "XLSX", "PDF", "image", "OCR"],
+    "changed_source_reviewed": [
+      "src/knowledge_system/ingestion/router.py",
+      "src/knowledge_system/ingestion/markdown.py",
+      "src/knowledge_system/ingestion/csv.py",
+      "src/knowledge_system/ingestion/batch.py",
+      "src/knowledge_system/ingestion/__init__.py",
+      "src/knowledge_system/knowledge_units.py",
+      "src/knowledge_system/cli.py"
     ],
-    "runner_evidence": "All tests/test_*.py modules were imported. All unittest.TestCase methods and top-level test_* functions ran. Parametrize values expanded individually; fresh tmp_path and reversible monkeypatch were supplied. Count reconciles as 235 + 103 + 8 parameter expansions = 346.",
-    "failure_evidence": []
+    "phase14_tests_reviewed": [
+      "tests/test_ingestion_router.py",
+      "tests/test_markdown_ingestion.py",
+      "tests/test_csv_ingestion.py",
+      "tests/test_batch_ingestion.py"
+    ],
+    "necessary_html_regressions_reviewed": [
+      "tests/test_html_ingestion.py",
+      "tests/test_knowledge_units.py"
+    ],
+    "diff_boundary": "PASS: implementation adds only the three contracted formats, unified routing/results, structural unit conversion, deterministic batch merge, atomic corpus output and ingest CLI. Existing HTML parser/converter is reused. No index rebuild, network, LLM or unrelated product mechanism was added."
   },
-  "compile_import_cli": {
-    "result": "PASS",
-    "compile": "python -m compileall -q src tests PASS",
-    "source_modules_imported": 41,
-    "test_modules_imported": 43,
-    "package_import_side_effect_probe": "PASS: isolated working directory remained empty; no stdout/stderr, rebuild, network, LLM or Golden execution.",
-    "cli": {
-      "commands_passed": 10,
-      "exit_codes": "10/10 zero with empty stderr",
-      "commands": [
-        "python -m knowledge_system --help",
-        "python -m knowledge_system --version",
-        "python -m knowledge_system query --help",
-        "python -m knowledge_system resume --help",
-        "python -m knowledge_system demo list --format json",
-        "python -m knowledge_system demo run exact-locate --format json",
-        "python -m knowledge_system demo run source-ambiguity --format text",
-        "python -m knowledge_system demo all --format json",
-        "python -m knowledge_system query --corpus data/demo/corpus.v1.json --query <locate> --session-id final-cli --scope demo-payments --format json",
-        "python -m knowledge_system query --corpus data/demo/corpus.v1.json --query <browse> --session-id final-cli-text --scope demo-payments --format text"
-      ],
-      "json_schemas": ["knowledge-system.demo-list", "knowledge-system.demo-result", "knowledge-system.demo-all", "knowledge-system.query-result"],
-      "stdout_stderr_boundary": "PASS including stable input-error JSON and no traceback/internal path leakage"
+  "environment": {
+    "python": "C:\\Users\\Think\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "pytest": "unavailable: No module named pytest",
+    "runner": "Python 3.12 unittest",
+    "pythonpath": "repository src directory"
+  },
+  "commands": [
+    {
+      "command": "bundled-python -m pytest --version",
+      "result": "UNAVAILABLE",
+      "evidence": "No module named pytest; no tests were attempted by pytest."
+    },
+    {
+      "command": "bundled-python -m compileall -q src/knowledge_system/ingestion/router.py src/knowledge_system/ingestion/markdown.py src/knowledge_system/ingestion/csv.py src/knowledge_system/ingestion/batch.py src/knowledge_system/knowledge_units.py src/knowledge_system/cli.py",
+      "result": "PASS",
+      "evidence": "exit code 0; no compile errors"
+    },
+    {
+      "command": "PYTHONPATH=src bundled-python -c import knowledge_system.ingestion, knowledge_system.knowledge_units, knowledge_system.cli",
+      "result": "PASS",
+      "evidence": "P14_IMPORT_OK"
+    },
+    {
+      "command": "PYTHONPATH=src bundled-python -m unittest -v tests/test_ingestion_router.py tests/test_markdown_ingestion.py tests/test_csv_ingestion.py tests/test_batch_ingestion.py tests/test_html_ingestion.py tests/test_knowledge_units.py",
+      "result": "PASS",
+      "evidence": "Ran 36 tests in 0.317s; OK; 36 passed, 0 failed, 0 skipped"
+    },
+    {
+      "command": "git diff --check -- src/knowledge_system tests/test_ingestion_router.py tests/test_markdown_ingestion.py tests/test_csv_ingestion.py tests/test_batch_ingestion.py tests/test_html_ingestion.py tests/test_knowledge_units.py",
+      "result": "PASS",
+      "evidence": "No implementation or scoped-test whitespace errors."
     }
-  },
-  "full_golden": {
-    "result": "PASS_WITH_TRANSPARENT_LIMITATIONS",
-    "dataset_version": "golden-v1",
-    "corpus_version": "synthetic-corpus-v1",
-    "cases": 24,
-    "expressions": 72,
-    "plan_fingerprint": "52cfb0d79024b06a9e9f5264bca5cc9ad5f685792c49f2a21ab6198fc0c5ff9c",
-    "runs": 2,
-    "same_plan": true,
-    "pair_object_equal": true,
-    "pair_json_byte_equal": true,
-    "strict_pair_round_trip_equal": true,
-    "baseline_identity": {"system_id": "knowledge-system-baseline", "backend_version": "baseline-product-adapter-v1", "config_fingerprint": "cd53fdd839ee63caebee834b4f33673d3a4cc0ee5ac0c1914ee11569a1cad0d5"},
-    "current_identity": {"system_id": "knowledge-system-current", "backend_version": "hybrid-product-adapter-v1", "config_fingerprint": "64048deccab66600a1313e4f11fd76c58e0a36ebefa9ef87ec974b946fe25577"},
-    "baseline_metrics": {"recall": 0.764705882353, "recall_pass_rate": 0.764705882353, "ranking_mrr": 0.764705882353, "ranking_ndcg": 0.764705882353, "ranking_compliance_rate": 1.0, "browse_coverage": 1.0, "browse_precision": 1.0, "browse_pass_rate": 1.0, "behavior_pass_rate": 0.569444444444, "safety_pass_rate": 1.0, "missing": 0, "execution_failures": 0},
-    "current_metrics": {"recall": 0.862745098039, "recall_pass_rate": 0.862745098039, "ranking_mrr": 0.830882352941, "ranking_ndcg": 0.838159635978, "ranking_compliance_rate": 1.0, "browse_coverage": 1.0, "browse_precision": 1.0, "browse_pass_rate": 1.0, "behavior_pass_rate": 0.597222222222, "safety_pass_rate": 1.0, "missing": 0, "execution_failures": 0},
-    "required_comparisons": {
-      "overall_recall_delta": 0.098039215686,
-      "overall_mrr_delta": 0.066176470588,
-      "overall_ndcg_delta": 0.073453753625,
-      "discover_recall_baseline": 0.5,
-      "discover_recall_current": 0.75,
-      "discover_mrr_baseline": 0.5,
-      "discover_mrr_current": 0.614583333333,
-      "locate_recall_baseline": 0.888888888889,
-      "locate_recall_current": 0.888888888889,
-      "locate_mrr_baseline": 0.888888888889,
-      "locate_mrr_current": 0.888888888889,
-      "browse_is_set_metric_not_top1": true,
-      "browse_coverage": 1.0,
-      "permission_inactive_unknown_violations": 0,
-      "regressed_expression_ids": []
+  ],
+  "test_matrix": [
+    {
+      "scope": "unified ingestion router and HTML adapter",
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "evidence": "case-insensitive HTML/HTM/MD/MARKDOWN/CSV identification, unsupported extension, explicit registry boundary, existing HTML reuse, stable units and safe read/empty failures"
     },
-    "current_failed_expressions": {
-      "count": 30,
-      "recall_failures": ["X-C-A01-3", "X-C-A02-3", "X-C-A05-3", "X-C-D01-1", "X-C-D02-1", "X-C-D02-3", "X-C-L02-3"],
-      "behavior_or_provenance_failures_non_oos": ["X-C-A01-3", "X-C-A02-1", "X-C-A02-2", "X-C-A02-3", "X-C-A05-3", "X-C-D01-1", "X-C-D01-3", "X-C-D02-1", "X-C-D02-3", "X-C-D03-2", "X-C-D04-1", "X-C-D04-2", "X-C-D04-3", "X-C-L02-1"],
-      "oos_fixture_provenance_conflict": ["X-C-O01-1", "X-C-O01-2", "X-C-O01-3", "X-C-O02-1", "X-C-O02-2", "X-C-O02-3", "X-C-O03-1", "X-C-O03-2", "X-C-O03-3", "X-C-O04-1", "X-C-O04-2", "X-C-O04-3", "X-C-O05-1", "X-C-O05-2", "X-C-O05-3"],
-      "ranking_order_failures": [],
-      "browse_failures": [],
-      "safety_failures": []
+    {
+      "scope": "Markdown structural ingestion",
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "evidence": "heading hierarchy and paths, ordered paragraph/list/quote/fenced-code/table blocks, source preservation, stable unit IDs, SourceReference, lineage, UTF-8-SIG, FAILED/PARTIAL and safe decode/read errors"
     },
-    "p11_comparison": "Reproduces accepted P11 qualitative evidence: explicit 24/72 plan, zero missing/execution failures, current/Discover improvement, Locate non-regression, Browse 1.0 and Safety 1.0. The prior review JSON was replaced by later reviews, so exact historical numeric bytes are unavailable; events and deterministic current reruns show no regression.",
-    "judgment": "No undefined threshold was invented. Behavior is transparent and non-regressing. Fifteen OOS expressions expose a fixture/metric contradiction: zero Evidence is required while per-Evidence source/lineage coverage is also required. Remaining synthetic-adapter behavior gaps are known V0 limitations, not safety violations or regressions; executable product demos/tests prove frozen boundaries. T-1303 must list them, but they do not fail the explicit T-1302 Golden gates."
-  },
-  "demo": {
-    "result": "PASS",
-    "classification": "SYNTHETIC/DEMO_ONLY",
-    "runs": 2,
-    "scenarios_per_run": 8,
-    "passed": "16/16",
-    "byte_stable": true,
-    "output_sha256": "5f5a20ba816e536624206753555009c19057cf28e6257b8dc99597c0d15bfe2a",
-    "scenario_ids": ["exact-locate", "browse-scope", "fuzzy-discover", "case-threshold-update", "duplicate-compare", "knowledge-missing", "source-ambiguity", "out-of-scope"],
-    "verified": ["Evidence/Source", "Browse collection", "hybrid Discover", "threshold update", "duplicate", "Knowledge Missing", "Source Ambiguity Verification", "Out-of-Scope", "Human responsibility"]
-  },
-  "system_v0_invariants": [
-    {"id": 1, "name": "Original Query", "result": "PASS", "evidence": "context, agent_state, p10_f001 tests; threshold-update demo"},
-    {"id": 2, "name": "Explicit Facts", "result": "PASS", "evidence": "fact_extraction, deterministic_comparison, agent_state tests"},
-    {"id": 3, "name": "Source/Lineage", "result": "PASS", "evidence": "contracts, knowledge_units, trace tests; CLI/demo"},
-    {"id": 4, "name": "Derived authority lower than Source", "result": "PASS", "evidence": "rule_authority and rule_structure tests"},
-    {"id": 5, "name": "Permission hard boundary", "result": "PASS", "evidence": "candidate_filter/service_cli tests; independent probe; Safety 1.0"},
-    {"id": 6, "name": "Not Found != Not Exist", "result": "PASS", "evidence": "clarification/service_cli tests; missing demo"},
-    {"id": 7, "name": "Missing Case Info != Knowledge Gap", "result": "PASS", "evidence": "clarification/apply/comparison tests"},
-    {"id": 8, "name": "Retrieved != Answerable", "result": "PASS", "evidence": "evidence_quality/verification tests; partial probe"},
-    {"id": 9, "name": "Failure diagnosis separation", "result": "PASS", "evidence": "failure_diagnosis and limited_recovery tests"},
-    {"id": 10, "name": "Evidence cannot be rewritten", "result": "PASS", "evidence": "organizer/reference guard/hydration tests"},
-    {"id": 11, "name": "Organizer only organizes", "result": "PASS", "evidence": "evidence_map_plan/organizer/reference_guard tests"},
-    {"id": 12, "name": "Rule-driven Fact Extraction", "result": "PASS", "evidence": "information_requirements/fact_extraction/apply tests"},
-    {"id": 13, "name": "Evidence failure -> Verification", "result": "PASS", "evidence": "verification/service tests; ambiguity/missing demos"},
-    {"id": 14, "name": "Feedback is observation", "result": "PASS", "evidence": "feedback tests and independent authority probe"},
-    {"id": 15, "name": "Human final responsibility", "result": "PASS", "evidence": "apply/demo tests; CLI output; Safety 1.0"}
+    {
+      "scope": "CSV row ingestion",
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "evidence": "ordered header-value relations, stable row units, BOM, multiline physical line ranges, empty/duplicate headers, short/long rows, invalid encoding/syntax and reliable PARTIAL retention"
+    },
+    {
+      "scope": "mixed batch, CLI, corpus and query integration",
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "evidence": "mixed HTML/Markdown/CSV directory to canonical corpus to load_knowledge_units/KnowledgeService.query, deterministic order and byte-identical rerun, parser lineage, single-file path, exact dedupe, strict unit_id conflict, PARTIAL/FAILED aggregation, safe input errors, atomic replacement preservation and CLI exit/stdout/stderr boundaries"
+    },
+    {
+      "scope": "necessary existing HTML impact regression",
+      "tests": 7,
+      "passed": 7,
+      "failed": 0,
+      "evidence": "HTML source/structure/status behavior and existing structure-aware KnowledgeUnit stability, source/lineage and content separation remain intact"
+    }
   ],
-  "product_success": [
-    {"criterion": "traceable Knowledge Units", "result": "PASS", "evidence": "ingestion/units/navigation/lineage tests"},
-    {"criterion": "five request types", "result": "PASS_WITH_LIMITATIONS", "evidence": "8 demos and CLI pass; Golden gaps enumerated"},
-    {"criterion": "Hybrid value", "result": "PASS", "evidence": "recall +0.098039215686; MRR +0.066176470588; Discover recall 0.50 to 0.75"},
-    {"criterion": "Case boundary", "result": "PASS", "evidence": "comparison/fact/authority tests; Safety 1.0"},
-    {"criterion": "recovery/diagnosis/Verification", "result": "PASS", "evidence": "quality/recovery/diagnosis/verification tests and ambiguity demo"},
-    {"criterion": "grounded Organizer", "result": "PASS", "evidence": "organizer/reference/hydration tests"},
-    {"criterion": "explainable Trace", "result": "PASS", "evidence": "trace tests and CLI payload"},
-    {"criterion": "Human responsibility", "result": "PASS", "evidence": "CLI/demo disclaimer and no-final-decision tests"}
-  ],
-  "adversarial_matrix": {
-    "result": "PASS",
-    "count": "10/10",
-    "probes": [
-      "malformed duplicate corpus JSON rejected",
-      "permission/inactive/unknown bypass rejected",
-      "unknown Evidence guard is all-or-nothing",
-      "partial Evidence enters Verification",
-      "snapshot tamper/cross-session rejected",
-      "feedback remains observation",
-      "final index save failure does not advance indexed_commit",
-      "deterministic rerun",
-      "package import has no side effects",
-      "evaluation import does not auto-run Golden"
-    ],
-    "note": "Initial permission probe used the wrong method keyword; corrected to documented KnowledgeService(granted_permissions=...) and passed. This was reviewer harness error, not product failure."
+  "acceptance_evidence": {
+    "mixed_to_query_minimal_chain": "PASS: a mixed nested directory containing HTML, Markdown and CSV produced a canonical corpus; load_knowledge_units read all written units and KnowledgeService.query returned Evidence.",
+    "determinism": "PASS: two independent writes from the same mixed source were byte-identical and BatchIngestionResult dictionaries were equal; discovery order was deterministic and case-insensitive.",
+    "stable_identity_and_provenance": "PASS: unit IDs repeat across reruns; SourceReference retains source filename/location without fabricated page/sheet; lineage document/source positions and parser/chunker/processing versions are present. Stable source identity is represented by lineage.document_id under the frozen core contract.",
+    "markdown_structure": "PASS: ATX heading hierarchy and ordered heading/paragraph/list/quote/fenced-code/table units preserve original content and line provenance; unclosed fences are PARTIAL and empty input is FAILED.",
+    "csv_structure": "PASS: header-to-value relation is positional, every reliable row has physical start/end lines, multiline records retain ranges, header/width anomalies are audited, invalid or late syntax is FAILED/PARTIAL as appropriate.",
+    "dedupe_and_conflict": "PASS: exact duplicate units are counted and retained once in first-seen order; same unit_id with differing content or provenance fails closed before replacing output.",
+    "safe_failures": "PASS: unsupported/missing/unreadable/no-supported inputs, invalid encodings, malformed content and output overlap produce stable safe errors without traceback leakage.",
+    "atomic_output": "PASS: serialization and os.replace failure preserve existing output and remove temporary files; all-failed ingestion does not replace output."
   },
-  "persistence_and_security": {
-    "snapshot_tamper_cross_session": "PASS",
-    "feedback_authority": "PASS",
-    "unknown_evidence_guard": "PASS",
-    "source_index_failure_no_advance": "PASS",
-    "strict_json": "PASS across corpus, snapshot, Golden, regression and incremental results",
-    "import_auto_side_effects": "NONE",
-    "network_or_llm_calls": false
-  },
-  "known_limitations": [
-    "Golden and demos are synthetic; they do not establish real-enterprise policy quality.",
-    "Golden Behavior is 0.597222222222. Fifteen OOS provenance failures are a fixture/metric contradiction; 14 additional non-OOS behavior/provenance gaps and one recall-only Locate gap remain transparent V0 adapter limitations.",
-    "Local deterministic vector index only; external embedding/LLM quality, latency, availability and cost were not evaluated.",
-    "Real-world format breadth, OCR, scale, concurrency, performance and crash durability were not release-benchmarked.",
-    "Exact P11 numeric artifact is unavailable because review_result is latest-result storage.",
-    "Containing Git repository has no commits and reports this project untracked; historical protected-file attribution is unavailable. This reviewer changed no contract or implementation file."
-  ],
-  "not_covered": [
-    "external network/LLM/embedding services and production credentials",
-    "real confidential enterprise corpus and authorization provider",
-    "load/soak/concurrency/performance",
-    "OCR/image-only PDF",
-    "OS ACL beyond application filters",
-    "byte comparison to replaced P11 review artifact"
-  ],
   "scope_audit": {
     "result": "PASS",
     "reviewer_written_files": [".runtime/review_result.json"],
-    "implementation_test_data_modified": false,
-    "protected_contracts_modified": false,
-    "state_current_events_modified": false,
-    "temporary_repository_runner_files_created": false,
-    "contract_hashes": {
-      "PRODUCT.md": "c75f2bcc456f1bd34e97338a4815426422b689b23c590d64a72d02286f6725ee",
-      "SYSTEM.md": "7d940f65e54c312eacb71a5980ac985b82ce70a48768e0e0debe6ddbf6581704",
-      "DECISIONS.md": "2b864e11ae129099a708b3d3585e5a216dc1308ffe1b156379cc07f82713d4ba",
-      "BUILD.md": "d6de007669891f5dcfa2c3a0224af51b0c094828e8aabce07cab2a386f06ec30",
-      "TASKS.md": "34b2e358d8ffad3c14f3e94daf9b02d462c4cd43170080f1a084f211f3d72706"
-    }
+    "business_source_modified": false,
+    "tests_modified": false,
+    "frozen_contracts_modified_by_reviewer": false,
+    "state_current_events_builder_result_modified_by_reviewer": false,
+    "git_index_or_history_modified": false,
+    "builder_scope_attribution": "PASS based on Phase 14 events 225-232 and T-1403 builder_result; Human contract updates and Orchestrator runtime transitions predate this review."
   },
+  "non_blocking_observations": [
+    "A repository-wide git diff --check reports one trailing-whitespace line in Human-updated SYSTEM.md. The Phase 14 implementation/test-scoped diff check is clean; the formatting-only contract observation does not affect Gate behavior and this Reviewer did not edit the frozen file.",
+    "pytest is not installed in the bundled runtime, so the six explicitly authorized modules were executed with their native unittest runner; no compatibility shim or test omission was needed."
+  ],
+  "not_run": [
+    "all other tests/test_*.py modules",
+    "project full regression",
+    "Golden Dataset",
+    "Final Review",
+    "demo scenarios",
+    "embedding/index rebuild",
+    "network or LLM evaluation",
+    "load, performance, soak or concurrency tests"
+  ],
+  "coverage_limits": [
+    "This is a Phase 14 ingestion Gate, not a new release-level regression or Final Review.",
+    "Only HTML, Markdown and CSV are accepted; excluded formats were not implemented or functionally tested.",
+    "Filesystem permission behavior was exercised through deterministic mocks and temporary directories, not OS ACL mutation.",
+    "Real confidential enterprise documents and production-scale corpora were not used."
+  ],
   "failure_evidence": [],
-  "release_conclusion": "T-1302 PASS. All 346 expanded tests pass without omission; compile/import/CLI, two Full Golden pairs, two 8-scenario demo runs, all 15 invariants, product criteria and 10 adversarial probes pass. Known Golden gaps are disclosed, deterministic, non-safety and non-regressing; the OOS subset is a fixture/metric contradiction. Human can independently run the product; T-1303 completion reporting is allowed."
+  "conclusion": "P14-GATE PASS. All 36 authorized focused/integration/necessary HTML regression tests pass with no failures or skips; changed-source compile/import checks pass. The three-format mixed ingestion path is deterministic, traceable, query-readable, strict on conflicts and atomic on output failure. A new Phase 14 verified checkpoint is allowed. Full regression, Golden Dataset, Final Review, demos and unrelated tests were explicitly not run."
 }

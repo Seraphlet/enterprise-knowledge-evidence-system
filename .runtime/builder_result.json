@@ -1,102 +1,183 @@
 {
   "actor": "builder",
-  "task_id": "T-1303",
-  "based_on_runtime_version": 223,
+  "task_id": "T-1403",
+  "based_on_runtime_version": 231,
   "status": "READY_FOR_REVIEW",
-  "phase": "P13",
-  "summary": "Created the V0 completion report without changing product mechanisms, implementation, tests, data, contracts, or orchestrator-owned runtime state.",
+  "phase": "P14",
+  "summary": "Completed the logical Phase 14 merge point: the ingest CLI now routes one supported file or a deterministically discovered mixed directory through the existing unified registry, strictly merges KnowledgeUnits, emits an auditable per-source summary, and atomically writes a canonical corpus that the query loader can consume. Automated execution remains intentionally deferred to P14-GATE.",
+  "interrupted_work_audit": {
+    "result": "PRESERVED_AND_COMPLETED",
+    "observed_on_resume": [
+      "src/knowledge_system/ingestion/batch.py, the ingest CLI branch, ingestion exports, and tests/test_batch_ingestion.py existed as legitimate unfinished T-1403 work.",
+      ".runtime/builder_result.json was deleted/missing, consistent with the interrupted handoff.",
+      "The dirty worktree also contained prior T-1400 through T-1402 implementation/tests plus Orchestrator/Human contract and runtime updates; these were treated as inherited work and were not reverted or overwritten."
+    ],
+    "actions": [
+      "Reviewed the interrupted batch/CLI implementation against every current_task acceptance criterion.",
+      "Kept the existing parser/registry integration and completed missing static test coverage for single-file ingestion, deterministic discovery, three-format provenance, all-failed behavior, unreadable directories, input/output overlap, serialization safety, atomic replacement safety, and CLI conflict boundaries.",
+      "Did not modify protected contracts, Orchestrator-owned runtime files, or prior format parser/converter implementations."
+    ]
+  },
   "changed_files": [
-    "V0_COMPLETION_REPORT.md",
+    "src/knowledge_system/ingestion/batch.py",
+    "src/knowledge_system/ingestion/__init__.py",
+    "src/knowledge_system/cli.py",
+    "tests/test_batch_ingestion.py",
     ".runtime/builder_result.json"
   ],
   "coverage_matrix": [
     {
-      "criterion": "Version status, Final Review and synthetic boundary",
-      "result": "COVERED",
-      "evidence": "Sections 1 and 4 explicitly state T-1302 PASS and SYNTHETIC / DEMO_ONLY limitations."
+      "criterion": "ingest CLI accepts --source/--output for one file or a directory and discovers only HTML/HTM/MD/MARKDOWN/CSV in deterministic order",
+      "result": "COVERED_STATICALLY",
+      "evidence": "cli.py registers the ingest subcommand; discover_source_files filters via identify_format and sorts by casefolded relative POSIX path with an exact-path tie-breaker. Test drafts cover one file, mixed nested directories, case-insensitive extensions, ignored .txt files, and exact expected order."
     },
     {
-      "criterion": "Complete V0 capability inventory",
-      "result": "COVERED",
-      "evidence": "Section 2 maps ingestion, Knowledge Units, filters/retrieval, five requests, context/case, rule/fact/compare, quality/recovery/diagnosis, organizer, verification/feedback, graph/session, evaluation, version/index, CLI/service/demo to implementation files."
+      "criterion": "safe input boundary without creating or damaging output",
+      "result": "COVERED_STATICALLY",
+      "evidence": "BatchIngestionError codes cover missing source, unsupported file, invalid source type, unreadable directory, no supported files, path resolution, and output/source overlap. Discovery and conflict happen before writing; test drafts retain sentinel output for bad inputs and retain the source on overlap."
     },
     {
-      "criterion": "Copyable Human quickstart",
-      "result": "COVERED",
-      "evidence": "Section 3 includes Python/PYTHONPATH prerequisites, help/version, demo list/all/run, JSON/text query, snapshot/resume, synthetic disclaimer and exit-code/stdout/stderr behavior."
+      "criterion": "registry/parser reuse and deterministic merge/output bytes",
+      "result": "COVERED_STATICALLY",
+      "evidence": "ingest_sources calls the unified ingest_file for every discovered path and contains no format parser. canonical_corpus_json uses ensure_ascii=False, sort_keys=True and compact separators; ordered source iteration and first-seen units are stable. Mixed-directory draft compares byte-identical outputs across two runs."
     },
     {
-      "criterion": "Accurate T-1302 metrics with no composite score",
-      "result": "COVERED",
-      "evidence": "Section 4 reports 43 modules, 346/346, 24/72 two-run Full Golden, separate baseline/current Recall/MRR/NDCG/Browse/Behavior/Safety, Discover improvement, Locate non-regression, demos, invariants and adversarial results."
+      "criterion": "canonical corpus is directly readable/queryable",
+      "result": "COVERED_STATICALLY",
+      "evidence": "canonical_corpus_json writes a top-level array of KnowledgeUnit.to_dict objects. The integration draft reads it with load_knowledge_units and constructs KnowledgeService.query evidence. No optional --scope mutation was implemented."
     },
     {
-      "criterion": "Trace fields and real demo mapping",
-      "result": "COVERED",
-      "evidence": "Section 5 enumerates actual Trace contract fields, distinguishes non-Trace companion data, and maps all eight demos without fabricating a unified trace field."
+      "criterion": "strict unit_id deduplication and conflict failure",
+      "result": "COVERED_STATICALLY",
+      "evidence": "Each unit is compared by a canonical serialization of the full KnowledgeUnit. Exact duplicates increment deduplicated_unit_count; the same unit_id with any content, metadata, source reference, lineage, or status difference raises UNIT_ID_CONFLICT before output replacement."
     },
     {
-      "criterion": "Known limitations and unresolved gaps",
-      "result": "COVERED",
-      "evidence": "Section 6 discloses Behavior 0.597222222222, 15 OOS provenance contradictions, 14 non-OOS behavior/provenance gaps, one recall-only Locate gap, synthetic/local-only boundaries, authorization/formats/OCR/scale/concurrency/performance/durability/external-service and historical-audit limitations."
+      "criterion": "SUCCESS/PARTIAL/FAILED aggregation and auditable counts/issues",
+      "result": "COVERED_STATICALLY",
+      "evidence": "BatchIngestionResult reports aggregate status, input/written/deduplicated counts, output_written, status counts, and ordered per-source format/status/unit_count/warnings/errors. Reliable PARTIAL units remain writable; all-failed sources produce no corpus replacement."
     },
     {
-      "criterion": "Evidence-linked next-round candidates, not implemented",
-      "result": "COVERED",
-      "evidence": "Section 7 maps each evidence class to a candidate and labels all candidates unimplemented and subject to Human contract revision."
+      "criterion": "atomic output and preservation on serialization/write failure",
+      "result": "COVERED_STATICALLY",
+      "evidence": "write_corpus_atomic serializes before opening a temp file, creates the temp beside the target, flushes/fsyncs it, then uses os.replace; the finally block removes an uncommitted temp. Drafts inject serialization and replace failures and assert the prior output and temp hygiene."
     },
     {
-      "criterion": "Links, Human responsibility and completion stop",
+      "criterion": "stable CLI stdout/stderr/exit behavior with no query/index/network/LLM side effect",
+      "result": "COVERED_STATICALLY",
+      "evidence": "Successful/PARTIAL summaries go to stdout as stable JSON or deterministic text; warnings/errors go to stderr JSON. FAILED results and BatchIngestionError use EXIT_INPUT_ERROR=2; unexpected exceptions retain EXIT_INTERNAL_ERROR=3 without traceback. Static search found no network, LLM, index rebuild, or query invocation in batch.py."
+    },
+    {
+      "criterion": "focused and Phase 14 integration test authorship",
+      "result": "AUTHORED_NOT_RUN",
+      "evidence": "tests/test_batch_ingestion.py now drafts 13 focused/integration cases spanning single file, mixed directory, repeat stability, three parser lineage versions, query loading, exact dedup, conflicts, PARTIAL/FAILED, input boundaries, serialization/atomic replacement, and CLI streams/exit codes. Existing deferred T-1400/T-1401/T-1402 drafts remain intact."
+    },
+    {
+      "criterion": "writable scope and Phase 14 execution prohibition",
       "result": "COVERED",
-      "evidence": "Report links protected contracts, demo/golden data, entry points and final review evidence; Sections 1 and 8 retain Human responsibility and PROJECT_COMPLETE stop conditions."
+      "evidence": "Only current_task writable files were written. No Python interpreter, pytest/unittest, compile/import smoke, CLI execution, phase integration, or regression command was run."
     }
   ],
   "checks": [
     {
-      "name": "runtime guard",
+      "name": "runtime concurrency guard",
       "result": "PASS",
-      "details": "HUMAN_RUNTIME_STATE=RUN; state runtime_version=223; expected_actor=builder; current task/assignment=T-1303/builder; based_on_runtime_version=223; writable scope matched."
+      "details": "HUMAN_RUNTIME_STATE=RUN; state runtime_version=231; expected_actor=builder; current_task/assignment=T-1403/builder; based_on_runtime_version=231."
     },
     {
-      "name": "report local-link existence",
-      "result": "PASS",
-      "details": "45 Markdown local links inspected; 0 missing."
+      "name": "acceptance-oriented source inspection",
+      "result": "PASS_STATIC",
+      "details": "Read batch.py, router.py, all three format loaders/parsers, KnowledgeUnit converters, query corpus loader, CLI, and all Phase 14 test drafts; traced discovery -> ingest_file registry -> strict merge -> canonical serialization -> atomic replacement -> CLI reporting."
     },
     {
-      "name": "required disclosure static check",
-      "result": "PASS",
-      "details": "Required markers for SYNTHETIC / DEMO_ONLY, 346/346, 24 cases / 72 expressions, Behavior 0.597222222222, PROJECT_COMPLETE and Human responsibility were present."
+      "name": "implementation symbol and side-effect scan",
+      "result": "PASS_STATIC",
+      "details": "Confirmed unified ingest_file call, conflict guard, NamedTemporaryFile + fsync + os.replace, ingest CLI exit boundary, and test coverage markers. No requests/urllib/httpx/openai/vector/rebuild/KnowledgeService/query invocation was found in batch.py."
     },
     {
-      "name": "single permitted demo CLI smoke attempt",
-      "result": "ENVIRONMENT_NOT_RUN",
-      "command": "$env:PYTHONPATH='src'; python -m knowledge_system demo run exact-locate --format json",
-      "details": "The command did not start because `python` is not available on this shell PATH. No alternate runtime or second demo smoke was attempted. T-1302 independently records two successful 8-scenario demo runs."
+      "name": "diff whitespace validation",
+      "result": "PASS",
+      "details": "git diff --check reported no whitespace errors for tracked T-1403 files; untracked batch/test files were manually inspected because git diff does not report their content until staged, and nothing was staged."
+    },
+    {
+      "name": "protected and inherited dirty-worktree audit",
+      "result": "PASS_WITH_INHERITED_CHANGES",
+      "details": "Protected SYSTEM.md, BUILD.md, TASKS.md and Orchestrator-owned state/current/events were already modified by the active Phase 14 runtime. This Builder did not write them. PRODUCT.md, DECISIONS.md, HUMAN_RUNTIME_STATE, and review_result were not modified."
+    },
+    {
+      "name": "initial static symbol command",
+      "result": "RETRIED_PASS",
+      "details": "The first read-only rg expression was malformed by PowerShell quoting and returned a regex parse error. It did not execute code or change files; the audit was rerun with separate -e patterns and passed."
     }
   ],
   "scope_audit": {
     "result": "PASS",
     "allowed_files_written": [
-      "V0_COMPLETION_REPORT.md",
+      "tests/test_batch_ingestion.py",
       ".runtime/builder_result.json"
     ],
-    "implementation_modified": false,
-    "tests_modified": false,
-    "data_modified": false,
-    "protected_contracts_modified": false,
-    "orchestrator_runtime_files_modified": false,
-    "new_mechanisms_or_thresholds_added": false
+    "interrupted_allowed_files_preserved_as_task_output": [
+      "src/knowledge_system/ingestion/batch.py",
+      "src/knowledge_system/ingestion/__init__.py",
+      "src/knowledge_system/cli.py"
+    ],
+    "protected_contracts_written_by_this_builder": false,
+    "orchestrator_runtime_files_written_by_this_builder": false,
+    "format_parsers_or_knowledge_unit_converters_written_by_this_builder": false,
+    "git_index_or_history_modified": false
   },
-  "risks": [
-    "This report faithfully carries forward T-1302 evidence but does not independently rerun regression, Golden or Final Review.",
-    "The current shell cannot resolve `python`; Human quickstart assumes a Python 3.10+ executable named `python` or an equivalent installed console entry point.",
-    "Golden and Demo evidence remains synthetic and must not be interpreted as validation of real enterprise policy."
-  ],
   "not_run": [
-    "full regression",
-    "Golden Dataset",
-    "Final Review",
-    "wide or adjacent unit tests",
-    "a completed demo smoke, due to missing python command on PATH"
-  ]
+    "Python interpreter execution of any kind",
+    "pytest, unittest, or any automated test",
+    "compile, py_compile, import smoke, or package import",
+    "knowledge-system ingest/query CLI smoke",
+    "T-1400 HTML/router focused tests",
+    "T-1401 Markdown focused tests",
+    "T-1402 CSV focused tests",
+    "T-1403 batch focused/integration tests",
+    "existing HTML regression tests",
+    "project full regression, Golden Dataset, or Final Review"
+  ],
+  "risks": [
+    "All behavior is statically audited only; syntax, imports, runtime semantics, and mocked failure paths remain unexecuted until P14-GATE.",
+    "Atomic replacement and permission behavior can vary by operating system/filesystem; P14-GATE should exercise the provided temp-directory failure fixtures on the target Windows environment.",
+    "The inherited T-1400 through T-1402 parser/converter changes are part of the same unverified Phase 14 merge and must be validated together before a new verified checkpoint.",
+    "Source identity intentionally follows the existing format converters (source filename/url). Identical same-named copies can deduplicate, while same unit_id with differing content/provenance fails closed; Gate should confirm this is the desired duplicate-source behavior with real directory fixtures."
+  ],
+  "p14_gate_recommendation": {
+    "reviewer_required": true,
+    "full_project_regression_forbidden": true,
+    "matrix": [
+      {
+        "scope": "format routing and HTML baseline",
+        "suggested_tests": [
+          "tests/test_ingestion_router.py",
+          "tests/test_html_ingestion.py",
+          "relevant HTML cases in tests/test_knowledge_units.py"
+        ],
+        "verify": "case-insensitive HTML/HTM routing, existing HTML behavior, stable units, source references, lineage, and no fabricated page"
+      },
+      {
+        "scope": "Markdown focused",
+        "suggested_tests": [
+          "tests/test_markdown_ingestion.py"
+        ],
+        "verify": "heading paths, structural blocks, code/list/quote/table preservation, stable IDs, UTF-8-SIG, PARTIAL/FAILED and lineage"
+      },
+      {
+        "scope": "CSV focused",
+        "suggested_tests": [
+          "tests/test_csv_ingestion.py"
+        ],
+        "verify": "headers/rows/physical line ranges, BOM, empty/duplicate headers, width mismatches, invalid encoding/syntax, PARTIAL/FAILED and lineage"
+      },
+      {
+        "scope": "mixed batch/CLI/query integration",
+        "suggested_tests": [
+          "tests/test_batch_ingestion.py"
+        ],
+        "verify": "single and mixed directory ingestion, deterministic order and bytes, unsupported-file exclusion, canonical query loading, three-format provenance, exact duplicate counting, strict conflicts, aggregate audit, atomic preservation, stdout/stderr and exit codes"
+      }
+    ],
+    "failure_policy": "If Gate fails, rerun only the failed focused test(s) and necessary adjacent cases after a scoped Builder fix; do not broaden to the full project suite unless evidence shows a shared-component regression."
+  }
 }

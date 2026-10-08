@@ -1,13 +1,76 @@
 """Source loading and parsing interfaces."""
 
+from .batch import (
+    BATCH_SCHEMA,
+    BATCH_SCHEMA_VERSION,
+    BatchIngestionError,
+    BatchIngestionResult,
+    SourceIngestionSummary,
+    batch_diagnostics,
+    canonical_corpus_json,
+    discover_source_files,
+    format_batch_text,
+    ingest_sources,
+    ingest_to_corpus,
+    write_corpus_atomic,
+)
+from .csv import CsvDocument, CsvField, CsvRow, load_csv, parse_csv
 from .html import HtmlBlock, HtmlDocument, HtmlSection, HtmlTable, load_html, parse_html
+from .markdown import (
+    MarkdownBlock,
+    MarkdownDocument,
+    MarkdownHeading,
+    load_markdown,
+    parse_markdown,
+)
+from .router import (
+    EXTENSION_FORMATS,
+    IngestionFormat,
+    IngestionIssue,
+    IngestionLoader,
+    IngestionResult,
+    LoaderRegistry,
+    create_default_registry,
+    identify_format,
+    ingest_file,
+)
 
 __all__ = [
+    "BATCH_SCHEMA",
+    "BATCH_SCHEMA_VERSION",
+    "BatchIngestionError",
+    "BatchIngestionResult",
+    "SourceIngestionSummary",
+    "batch_diagnostics",
+    "canonical_corpus_json",
+    "discover_source_files",
+    "format_batch_text",
+    "ingest_sources",
+    "ingest_to_corpus",
+    "write_corpus_atomic",
+    "CsvDocument",
+    "CsvField",
+    "CsvRow",
+    "load_csv",
+    "parse_csv",
     "HtmlBlock",
     "HtmlDocument",
     "HtmlSection",
     "HtmlTable",
     "load_html",
     "parse_html",
+    "MarkdownBlock",
+    "MarkdownDocument",
+    "MarkdownHeading",
+    "load_markdown",
+    "parse_markdown",
+    "EXTENSION_FORMATS",
+    "IngestionFormat",
+    "IngestionIssue",
+    "IngestionLoader",
+    "IngestionResult",
+    "LoaderRegistry",
+    "create_default_registry",
+    "identify_format",
+    "ingest_file",
 ]
-

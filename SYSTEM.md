@@ -59,7 +59,15 @@ Employee
 
 Chunk 是知识检索单位，不是固定字符窗口。层级文档按结构；FAQ 按 Q+A；表格保留表头与单元格关系；CSV 按行/结构单元；普通文本再使用动态窗口。
 
-V0 首批格式：HTML/Markdown/Text/DOCX/CSV；文本型 PDF 有限支持。OCR/图片内容不是 V0 必需能力。解析状态必须区分 SUCCESS/PARTIAL/FAILED。
+V0 本轮知识导入仅支持 HTML、Markdown 和 CSV。
+
+- HTML：按标题层级和结构块切分。
+- Markdown：按标题层级和结构单元切分，并保留代码块、列表、引用和表格语义。
+- CSV：表头作为字段定义，每一数据行生成一个结构化知识单元，并保留原始行号。
+- 所有格式必须生成稳定的 source_id、unit_id、SourceReference 和 lineage。
+- 导入结果区分 SUCCESS、PARTIAL 和 FAILED。
+
+Text、DOCX、XLS/XLSX、PDF、图片及 OCR 不属于本轮范围。
 
 ## 4. Semantic Content 与 Metadata
 
@@ -104,7 +112,7 @@ Query/Case
 规则是“问题生成器”。不要在 Retrieval 前把 Query 与全语料规则逐条比较。
 
 ## 8. Rule Structure 与 Comparison
-
+ 
 Rule Structure 可包含：
 - conditions
 - logical_relations (AND/OR)

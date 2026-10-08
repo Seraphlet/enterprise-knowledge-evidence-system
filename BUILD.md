@@ -244,3 +244,16 @@ Orchestrator：
 `V0_COMPLETE_PENDING_REGRESSION → Full Regression → Golden Dataset → Final Review → PROJECT_COMPLETE`。
 
 PROJECT_COMPLETE 后停止自动新增机制，输出 completion report 给 Human。下一轮修改由 Human 基于完整成品体验重新修改契约后启动。
+
+## Phase 14 测试策略
+
+T-1400 至 T-1403 的 Builder 可以编写测试，但不得执行自动化测试、全量测试或回归测试。
+
+T-1403 完成功能合并后，才进入 P14-GATE。P14-GATE 由 Reviewer 一次性执行：
+
+1. HTML / Markdown / CSV 导入聚焦测试；
+2. 混合格式批量导入集成测试；
+3. 导入结果进入 query 的最小链路测试；
+4. 必要的既有 HTML 行为回归测试。
+
+不得执行项目全量测试。若 Gate 失败，只允许在修复完成后重新执行相关失败测试。

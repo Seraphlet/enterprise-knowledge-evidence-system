@@ -25,6 +25,12 @@ from .demo_runner import (
     default_demo_paths,
     format_demo_text,
 )
+from .ingestion.batch import (
+    BatchIngestionError,
+    batch_diagnostics,
+    format_batch_text,
+    ingest_to_corpus,
+)
 
 
 EXIT_OK = 0
@@ -55,6 +61,12 @@ def build_parser() -> argparse.ArgumentParser:
     resume.add_argument("--snapshot", required=True)
     resume.add_argument("--session-id", required=True)
     resume.add_argument("--format", choices=("json", "text"), default="text")
+    ingest = commands.add_parser(
+        "ingest", help="ingest one file or directory into a KnowledgeUnit corpus"
+    )
+    ingest.add_argument("--source", required=True, help="supported file or directory")
+    ingest.add_argument("--output", required=True, help="canonical corpus JSON output")
+    ingest.add_argument("--format", choices=("json", "text"), default="text")
     demo = commands.add_parser("demo", help="run the bundled SYNTHETIC/DEMO_ONLY scenarios")
     demo_commands = demo.add_subparsers(dest="demo_command")
     default_manifest, default_corpus = default_demo_paths()
@@ -200,10 +212,38 @@ def main(argv: Sequence[str] | None = None) -> int:
             resumed = resume_query_snapshot(args.snapshot, args.session_id)
             payload = _resume_payload(resumed)
             output = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")) if args.format == "json" else "\n".join(f"{key}: {value}" for key, value in payload.items())
+        elif args.command == "ingest":
+            result = ingest_to_corpus(args.source, args.output)
+            diagnostics = batch_diagnostics(result)
+            if diagnostics:
+                print(
+                    json.dumps(
+                        {"diagnostics": list(diagnostics)},
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    ),
+                    file=sys.stderr,
+                )
+            output = (
+                json.dumps(
+                    result.to_dict(),
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                )
+                if args.format == "json"
+                else format_batch_text(result)
+            )
+            print(output)
+            return EXIT_INPUT_ERROR if result.status.value == "FAILED" else EXIT_OK
         else:
             output = _demo_output(args)
         print(output)
         return EXIT_OK
+    except BatchIngestionError as error:
+        _emit_error(error.code, error.message)
+        return EXIT_INPUT_ERROR
     except ServiceInputError as error:
         _emit_error(error.code, error.message)
         return EXIT_INPUT_ERROR
